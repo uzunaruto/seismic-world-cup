@@ -7,6 +7,7 @@ import { generateStats, Position, Kit } from '@/lib/stats';
 // 10 MB max for the card PNG (1080x1620 @ 2x = ~4MB typical, allow headroom)
 export const runtime = 'nodejs';
 export const maxDuration = 30;
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
   try {

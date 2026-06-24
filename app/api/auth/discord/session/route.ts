@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { fetchDiscordIdentity, readTokenFromHash } from '@/lib/auth';
+import { fetchDiscordIdentity } from '@/lib/auth';
 import { getServiceSupabase } from '@/lib/supabase';
+
+export const dynamic = 'force-dynamic';
 
 // POST /api/auth/discord/session
 // Body: { accessToken: string }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { toPng } from 'html-to-image';
@@ -24,6 +24,20 @@ const KITS: Kit[] = ['home', 'away', 'foil'];
 const MAX_MOTTO = 80;
 
 export default function Compose() {
+  return (
+    <Suspense fallback={
+      <main className="composer">
+        <div className="composer__stage">
+          <div className="loading"><div className="spinner" /> Loading…</div>
+        </div>
+      </main>
+    }>
+      <ComposeInner />
+    </Suspense>
+  );
+}
+
+function ComposeInner() {
   const router = useRouter();
   const params = useSearchParams();
   const detectedMag = params.get('mag');
