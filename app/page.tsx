@@ -4,36 +4,23 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { buildDiscordAuthUrl, readTokenFromHash, clearHash } from '@/lib/auth';
-
-interface DiscordUser {
-  discord_id: string;
-  username: string;
-  global_name: string | null;
-  pfp_url: string;
-  magnitude: number | null;
-  is_default_avatar: boolean;
-}
+import { useSession } from '@/lib/use-session';
 
 const REDIRECT_URI =
   typeof window !== 'undefined' ? `${window.location.origin}/` : 'http://localhost:3000/';
 
 export default function Home() {
   const router = useRouter();
-  const [user, setUser] = useState<DiscordUser | null>(null);
+  const { user, loading, backendReady, saveSession } = useSession();
   const [authError, setAuthError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [connecting, setConnecting] = useState(false);
 
   useEffect(() => {
+    // Handle OAuth callback (token in URL hash)
     const tokenData = readTokenFromHash();
-    if (!tokenData) {
-      fetch('/api/auth/discord/session')
-        .then((r) => r.json())
-        .then((d) => setUser(d.user))
-        .catch(() => {});
-      return;
-    }
+    if (!tokenData) return;
 
-    setLoading(true);
+    setConnecting(true);
     setAuthError(null);
     fetch('/api/auth/discord/session', {
       method: 'POST',
@@ -49,14 +36,17 @@ export default function Home() {
         return r.json();
       })
       .then((d) => {
-        setUser(d.user);
-        setLoading(false);
+        if (d.user) {
+          saveSession(d.user);
+          // Stay on landing so they see the post-login state
+        }
+        setConnecting(false);
       })
       .catch((err) => {
         setAuthError(err.message);
-        setLoading(false);
+        setConnecting(false);
       });
-  }, []);
+  }, [saveSession]);
 
   const handleConnect = () => {
     window.location.href = buildDiscordAuthUrl(REDIRECT_URI);
@@ -64,8 +54,13 @@ export default function Home() {
 
   const handleSignOut = async () => {
     await fetch('/api/auth/discord/session', { method: 'DELETE' });
-    setUser(null);
+    // Clear localStorage handled by useSession — caller should invoke clearSession,
+    // but doing it inline here is also fine.
+    try {
+      localStorage.removeItem('swc_user');
+    } catch {}
     router.refresh();
+    window.location.reload();
   };
 
   return (
@@ -86,14 +81,20 @@ export default function Home() {
         </div>
       )}
 
-      {loading && (
+      {connecting && (
         <div className="status-banner status-banner--pending" style={{ marginBottom: 16 }}>
           <div className="spinner" />
           Verifying your Discord identity…
         </div>
       )}
 
-      {!loading && !user && (
+      {!backendReady && !user && (
+        <div className="status-banner status-banner--pending" style={{ marginBottom: 16 }}>
+          ⚙️ Backend not configured yet. Discord auth works but submission/storage is disabled until Supabase + Discord webhook are set up.
+        </div>
+      )}
+
+      {!connecting && !user && (
         <div className="btn-row">
           <button onClick={handleConnect} className="btn-primary">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -107,7 +108,7 @@ export default function Home() {
         </div>
       )}
 
-      {!loading && user && (
+      {!connecting && user && (
         <>
           <div className="btn-row">
             <Link href="/compose" className="btn-primary">

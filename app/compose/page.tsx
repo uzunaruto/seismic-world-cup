@@ -1,20 +1,12 @@
 'use client';
 
-import { Suspense, useEffect, useRef, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { toPng } from 'html-to-image';
 import { PaniniCard, PaniniCardProps } from '@/components/PaniniCard';
 import { generateStats, Position, Kit, POSITION_LABELS, KIT_LABELS } from '@/lib/stats';
-
-interface DiscordUser {
-  discord_id: string;
-  username: string;
-  global_name: string | null;
-  pfp_url: string;
-  magnitude: number | null;
-  is_default_avatar: boolean;
-}
+import { useSession } from '@/lib/use-session';
 
 type Status = 'idle' | 'submitting' | 'pending' | 'approved' | 'rejected';
 
@@ -24,25 +16,13 @@ const KITS: Kit[] = ['home', 'away', 'foil'];
 const MAX_MOTTO = 80;
 
 export default function Compose() {
-  return (
-    <Suspense fallback={
-      <main className="composer">
-        <div className="composer__stage">
-          <div className="loading"><div className="spinner" /> Loading…</div>
-        </div>
-      </main>
-    }>
-      <ComposeInner />
-    </Suspense>
-  );
+  return <ComposeInner />;
 }
 
 function ComposeInner() {
   const router = useRouter();
-  const params = useSearchParams();
-  const detectedMag = params.get('mag');
 
-  const [user, setUser] = useState<DiscordUser | null>(null);
+  const { user, loading } = useSession();
   const [position, setPosition] = useState<Position>('midfielder');
   const [kit, setKit] = useState<Kit>('home');
   const [motto, setMotto] = useState('');
@@ -54,19 +34,10 @@ function ComposeInner() {
 
   const cardRef = useRef<HTMLDivElement>(null);
 
+  // If not logged in and not loading, send back to home
   useEffect(() => {
-    fetch('/api/auth/discord/session')
-      .then((r) => r.json())
-      .then((d) => {
-        if (!d.user) router.push('/');
-        else {
-          setUser(d.user);
-          if (d.user.magnitude && !detectedMag) {
-            // Could pre-select position based on Magnitude, but leave choice to user
-          }
-        }
-      });
-  }, [router, detectedMag]);
+    if (!loading && !user) router.push('/');
+  }, [loading, user, router]);
 
   // Poll for status if pending
   useEffect(() => {
@@ -142,11 +113,21 @@ function ComposeInner() {
     }
   };
 
+  if (loading) {
+    return (
+      <main className="composer">
+        <div className="composer__stage">
+          <div className="loading"><div className="spinner" /> Loading session…</div>
+        </div>
+      </main>
+    );
+  }
+
   if (!user) {
     return (
       <main className="composer">
         <div className="composer__stage">
-          <div className="loading"><div className="spinner" /> Loading…</div>
+          <div className="loading">Redirecting…</div>
         </div>
       </main>
     );
