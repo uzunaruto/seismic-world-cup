@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="grass" cx="50%" cy="50%" r="80%">
+      <stop offset="0%" stop-color="#3d7a2c"/>
+      <stop offset="100%" stop-color="#1e4a18"/>
+    </radialGradient>
+    <linearGradient id="strips" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3a7028"/>
+      <stop offset="50%" stop-color="#336625"/>
+      <stop offset="100%" stop-color="#3a7028"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base -->
+  <rect width="200" height="200" fill="#2e5a1f"/>
+  <rect width="200" height="200" fill="url(#grass)" opacity="0.6"/>
+
+  <!-- Mowed stripe (one band per tile, alternates when tiled) -->
+  <rect x="0" y="40" width="200" height="60" fill="url(#strips)" opacity="0.5"/>
+  <rect x="0" y="140" width="200" height="60" fill="url(#strips)" opacity="0.5"/>
+
+  <!-- Grass blades (dark) -->
+  <g fill="#1a3a14" opacity="0.55" stroke="#0e2a0a" stroke-width="0.3">
+    <path d="M8 32 q1.5 -7 3 0 z"/>
+    <path d="M22 18 q1 -5 2 0 z"/>
+    <path d="M38 45 q1.5 -6 3 0 z"/>
+    <path d="M55 22 q1 -4 2 0 z"/>
+    <path d="M70 38 q1.5 -7 3 0 z"/>
+    <path d="M88 15 q1 -5 2 0 z"/>
+    <path d="M105 42 q1.5 -6 3 0 z"/>
+    <path d="M120 25 q1 -5 2 0 z"/>
+    <path d="M138 35 q1.5 -7 3 0 z"/>
+    <path d="M155 18 q1 -4 2 0 z"/>
+    <path d="M172 40 q1.5 -6 3 0 z"/>
+    <path d="M188 28 q1 -5 2 0 z"/>
+
+    <path d="M12 75 q1 -4 2 0 z"/>
+    <path d="M30 88 q1.5 -7 3 0 z"/>
+    <path d="M48 72 q1 -4 2 0 z"/>
+    <path d="M65 92 q1.5 -6 3 0 z"/>
+    <path d="M82 78 q1 -5 2 0 z"/>
+    <path d="M100 95 q1.5 -7 3 0 z"/>
+    <path d="M118 75 q1 -4 2 0 z"/>
+    <path d="M135 88 q1.5 -6 3 0 z"/>
+    <path d="M152 72 q1 -5 2 0 z"/>
+    <path d="M170 95 q1.5 -7 3 0 z"/>
+    <path d="M188 80 q1 -4 2 0 z"/>
+
+    <path d="M5 130 q1.5 -7 3 0 z"/>
+    <path d="M22 118 q1 -5 2 0 z"/>
+    <path d="M40 145 q1.5 -6 3 0 z"/>
+    <path d="M58 125 q1 -4 2 0 z"/>
+    <path d="M75 142 q1.5 -7 3 0 z"/>
+    <path d="M93 120 q1 -5 2 0 z"/>
+    <path d="M110 148 q1.5 -6 3 0 z"/>
+    <path d="M128 122 q1 -4 2 0 z"/>
+    <path d="M145 140 q1.5 -7 3 0 z"/>
+    <path d="M162 118 q1 -5 2 0 z"/>
+    <path d="M180 145 q1.5 -6 3 0 z"/>
+    <path d="M195 130 q1 -4 2 0 z"/>
+
+    <path d="M8 178 q1 -4 2 0 z"/>
+    <path d="M28 188 q1.5 -7 3 0 z"/>
+    <path d="M48 172 q1 -5 2 0 z"/>
+    <path d="M65 190 q1.5 -6 3 0 z"/>
+    <path d="M85 175 q1 -4 2 0 z"/>
+    <path d="M105 192 q1.5 -7 3 0 z"/>
+    <path d="M125 178 q1 -5 2 0 z"/>
+    <path d="M145 188 q1.5 -6 3 0 z"/>
+    <path d="M165 172 q1 -4 2 0 z"/>
+    <path d="M188 192 q1.5 -7 3 0 z"/>
+  </g>
+
+  <!-- Grass blades (light) -->
+  <g fill="#6ba85a" opacity="0.4">
+    <path d="M15 25 q1 -5 2 0 z"/>
+    <path d="M45 50 q1.5 -6 3 0 z"/>
+    <path d="M75 28 q1 -4 2 0 z"/>
+    <path d="M115 48 q1.5 -6 3 0 z"/>
+    <path d="M150 22 q1 -4 2 0 z"/>
+    <path d="M180 50 q1.5 -6 3 0 z"/>
+
+    <path d="M20 80 q1 -4 2 0 z"/>
+    <path d="M55 95 q1.5 -7 3 0 z"/>
+    <path d="M90 78 q1 -4 2 0 z"/>
+    <path d="M125 95 q1.5 -6 3 0 z"/>
+    <path d="M160 82 q1 -5 2 0 z"/>
+
+    <path d="M30 138 q1.5 -6 3 0 z"/>
+    <path d="M65 122 q1 -4 2 0 z"/>
+    <path d="M100 145 q1.5 -7 3 0 z"/>
+    <path d="M140 128 q1 -5 2 0 z"/>
+    <path d="M175 145 q1.5 -6 3 0 z"/>
+
+    <path d="M18 180 q1 -4 2 0 z"/>
+    <path d="M55 195 q1.5 -6 3 0 z"/>
+    <path d="M95 178 q1 -5 2 0 z"/>
+    <path d="M135 195 q1.5 -7 3 0 z"/>
+    <path d="M175 180 q1 -4 2 0 z"/>
+  </g>
+
+  <!-- Tiny highlight flecks -->
+  <g fill="#9bc88a" opacity="0.5">
+    <circle cx="25" cy="35" r="0.6"/>
+    <circle cx="60" cy="55" r="0.5"/>
+    <circle cx="95" cy="25" r="0.7"/>
+    <circle cx="130" cy="50" r="0.6"/>
+    <circle cx="170" cy="30" r="0.5"/>
+    <circle cx="40" cy="85" r="0.6"/>
+    <circle cx="80" cy="100" r="0.7"/>
+    <circle cx="120" cy="85" r="0.5"/>
+    <circle cx="155" cy="105" r="0.6"/>
+    <circle cx="15" cy="135" r="0.7"/>
+    <circle cx="50" cy="155" r="0.5"/>
+    <circle cx="85" cy="130" r="0.6"/>
+    <circle cx="120" cy="155" r="0.7"/>
+    <circle cx="160" cy="135" r="0.5"/>
+    <circle cx="25" cy="185" r="0.6"/>
+    <circle cx="70" cy="170" r="0.5"/>
+    <circle cx="110" cy="190" r="0.7"/>
+    <circle cx="150" cy="175" r="0.6"/>
+    <circle cx="190" cy="195" r="0.5"/>
+  </g>
+</svg>

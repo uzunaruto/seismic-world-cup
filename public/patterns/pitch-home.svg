@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="focus" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#000" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ballH" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="60%" stop-color="#ffffff" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.2"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Mowed stripes (alternating light/dark green) -->
+  <g>
+    <rect x="0" y="0" width="1080" height="135" fill="#4a8c3a"/>
+    <rect x="0" y="135" width="1080" height="135" fill="#3d7a2c"/>
+    <rect x="0" y="270" width="1080" height="135" fill="#4a8c3a"/>
+    <rect x="0" y="405" width="1080" height="135" fill="#3d7a2c"/>
+    <rect x="0" y="540" width="1080" height="135" fill="#4a8c3a"/>
+    <rect x="0" y="675" width="1080" height="135" fill="#3d7a2c"/>
+    <rect x="0" y="810" width="1080" height="135" fill="#4a8c3a"/>
+    <rect x="0" y="945" width="1080" height="135" fill="#3d7a2c"/>
+    <rect x="0" y="1080" width="1080" height="135" fill="#4a8c3a"/>
+    <rect x="0" y="1215" width="1080" height="135" fill="#3d7a2c"/>
+  </g>
+
+  <!-- Grass texture overlay (subtle blades) -->
+  <g fill="#1e4a18" opacity="0.18">
+    <path d="M40 50 q1.5 -7 3 0 z"/><path d="M120 100 q1 -5 2 0 z"/><path d="M200 30 q1.5 -6 3 0 z"/><path d="M280 120 q1 -4 2 0 z"/><path d="M360 60 q1.5 -7 3 0 z"/><path d="M440 110 q1 -5 2 0 z"/><path d="M520 40 q1.5 -6 3 0 z"/><path d="M600 100 q1 -4 2 0 z"/><path d="M680 70 q1.5 -7 3 0 z"/><path d="M760 30 q1 -5 2 0 z"/><path d="M840 110 q1.5 -6 3 0 z"/><path d="M920 50 q1 -4 2 0 z"/><path d="M1000 120 q1.5 -7 3 0 z"/>
+    <path d="M30 200 q1 -4 2 0 z"/><path d="M110 280 q1.5 -6 3 0 z"/><path d="M190 230 q1 -5 2 0 z"/><path d="M270 300 q1.5 -7 3 0 z"/><path d="M350 220 q1 -4 2 0 z"/><path d="M430 290 q1.5 -6 3 0 z"/><path d="M510 240 q1 -5 2 0 z"/><path d="M590 310 q1.5 -7 3 0 z"/><path d="M670 230 q1 -4 2 0 z"/><path d="M750 290 q1.5 -6 3 0 z"/><path d="M830 220 q1 -5 2 0 z"/><path d="M910 300 q1.5 -7 3 0 z"/><path d="M990 240 q1 -4 2 0 z"/>
+    <path d="M20 400 q1.5 -7 3 0 z"/><path d="M100 460 q1 -4 2 0 z"/><path d="M180 420 q1.5 -6 3 0 z"/><path d="M260 480 q1 -5 2 0 z"/><path d="M340 410 q1.5 -7 3 0 z"/><path d="M420 470 q1 -4 2 0 z"/><path d="M500 430 q1.5 -6 3 0 z"/><path d="M580 490 q1 -5 2 0 z"/><path d="M660 420 q1.5 -7 3 0 z"/><path d="M740 470 q1 -4 2 0 z"/><path d="M820 430 q1.5 -6 3 0 z"/><path d="M900 490 q1 -5 2 0 z"/><path d="M980 420 q1.5 -7 3 0 z"/>
+  </g>
+
+  <!-- Pitch lines (white, faded) -->
+  <g stroke="rgba(255,255,255,0.55)" stroke-width="6" fill="none">
+    <!-- Outer boundary -->
+    <rect x="40" y="40" width="1000" height="1270" rx="6"/>
+    <!-- Center line -->
+    <line x1="40" y1="675" x2="1040" y2="675"/>
+    <!-- Center circle -->
+    <circle cx="540" cy="675" r="110"/>
+    <!-- Center spot -->
+    <circle cx="540" cy="675" r="6" fill="rgba(255,255,255,0.55)"/>
+  </g>
+
+  <!-- Top penalty area (trapezoid-ish rect) -->
+  <g stroke="rgba(255,255,255,0.55)" stroke-width="5" fill="none">
+    <rect x="240" y="40" width="600" height="180"/>
+    <rect x="380" y="40" width="320" height="80"/>
+    <circle cx="540" cy="290" r="6" fill="rgba(255,255,255,0.55)"/>
+    <!-- Bottom penalty -->
+    <rect x="240" y="1130" width="600" height="180"/>
+    <rect x="380" y="1230" width="320" height="80"/>
+    <circle cx="540" cy="1060" r="6" fill="rgba(255,255,255,0.55)"/>
+  </g>
+
+  <!-- Center focus vignette (so player portrait pops) -->
+  <rect width="1080" height="1350" fill="url(#focus)"/>
+
+  <!-- Ball top-right (faded) -->
+  <g transform="translate(880 220)" opacity="0.45">
+    <circle r="90" fill="url(#ballH)"/>
+    <polygon points="0,-45 43,-14 26,37 -26,37 -43,-14" fill="rgba(0,0,0,0.45)" stroke="rgba(0,0,0,0.6)" stroke-width="2"/>
+    <line x1="43" y1="-14" x2="62" y2="-18" stroke="rgba(0,0,0,0.3)" stroke-width="1.5"/>
+    <line x1="-43" y1="-14" x2="-62" y2="-18" stroke="rgba(0,0,0,0.3)" stroke-width="1.5"/>
+    <line x1="26" y1="37" x2="42" y2="65" stroke="rgba(0,0,0,0.3)" stroke-width="1.5"/>
+    <line x1="-26" y1="37" x2="-42" y2="65" stroke="rgba(0,0,0,0.3)" stroke-width="1.5"/>
+  </g>
+
+  <!-- Ball bottom-left (smaller) -->
+  <g transform="translate(180 1100)" opacity="0.35">
+    <circle r="60" fill="url(#ballH)"/>
+    <polygon points="0,-30 28,-9 17,24 -17,24 -28,-9" fill="rgba(0,0,0,0.4)"/>
+  </g>
+</svg>

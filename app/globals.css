@@ -7,9 +7,9 @@
    ========================================================================== */
 
 :root {
-  --bg: #8a6f50;
-  --bg-elev: #9a7f60;
-  --bg-elev-2: #a88e70;
+  --bg: #1e4a18;
+  --bg-elev: #2a5a1f;
+  --bg-elev-2: #346625;
   --parchment: #f5ebd7;
   --parchment-dim: #d8c8a8;
   --parchment-soft: rgba(245, 235, 215, 0.6);
@@ -23,11 +23,11 @@
   --rocky-bright: #e08a4a;
   --rose: #9c1515;
   --emerald: #2aa346;
-  --line: rgba(26, 20, 13, 0.25);
-  --line-soft: rgba(26, 20, 13, 0.12);
-  --line-strong: rgba(26, 20, 13, 0.40);
-  --shadow-1: 0 4px 20px rgba(26, 20, 13, 0.35);
-  --shadow-2: 0 8px 40px rgba(26, 20, 13, 0.5);
+  --line: rgba(245, 235, 215, 0.15);
+  --line-soft: rgba(245, 235, 215, 0.08);
+  --line-strong: rgba(245, 235, 215, 0.30);
+  --shadow-1: 0 4px 20px rgba(0, 0, 0, 0.45);
+  --shadow-2: 0 8px 40px rgba(0, 0, 0, 0.65);
   --shadow-card: 0 24px 60px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--line);
   --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
   --font-serif: 'Cinzel', 'Times New Roman', serif;
@@ -50,7 +50,9 @@ html, body {
 
 body {
   background-image:
-    radial-gradient(ellipse 80% 50% at 50% 50%, rgba(255, 220, 160, 0.10), transparent 70%);
+    url('/patterns/grass-tile.svg');
+  background-size: 200px 200px;
+  background-repeat: repeat;
   background-attachment: fixed;
   position: relative;
 }
@@ -882,79 +884,89 @@ button:focus-visible, a:focus-visible {
 }
 .kit-swatch__visual--home {
   background:
-    radial-gradient(circle at 70% 25%, rgba(245, 235, 215, 0.35) 0%, transparent 30%),
-    radial-gradient(circle at 25% 80%, rgba(245, 235, 215, 0.2) 0%, transparent 25%),
-    linear-gradient(160deg, #A87504 0%, #8a5d03 50%, #6a4802 100%);
+    linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.25) 100%),
+    repeating-linear-gradient(90deg, #4a8c3a 0%, #4a8c3a 16.6%, #3d7a2c 16.6%, #3d7a2c 33.2%);
 }
 .kit-swatch__visual--home::before {
   content: '';
   position: absolute;
   top: 12%;
   right: 12%;
-  width: 38%;
+  width: 30%;
   aspect-ratio: 1;
   background:
-    radial-gradient(circle at 50% 35%, rgba(245, 235, 215, 0.85) 0%, rgba(245, 235, 215, 0.4) 60%, transparent 80%);
+    radial-gradient(circle at 50% 35%, #ffffff 0%, rgba(255,255,255,0.5) 60%, transparent 80%);
   border-radius: 50%;
+  box-shadow: inset 0 -2px 4px rgba(0,0,0,0.2);
 }
 .kit-swatch__visual--home::after {
   content: '';
   position: absolute;
-  top: 18%;
-  right: 18%;
-  width: 26%;
+  top: 17%;
+  right: 17%;
+  width: 20%;
   aspect-ratio: 1;
-  background: transparent;
-  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.55);
   clip-path: polygon(50% 0%, 98% 38%, 79% 98%, 21% 98%, 2% 38%);
-  background-color: rgba(26, 20, 13, 0.35);
 }
 .kit-swatch__visual--away {
   background:
-    radial-gradient(circle at 70% 25%, rgba(200, 146, 8, 0.3) 0%, transparent 30%),
-    radial-gradient(circle at 25% 80%, rgba(200, 146, 8, 0.18) 0%, transparent 25%),
-    linear-gradient(160deg, #0a0806 0%, #1a140d 50%, #2a2018 100%);
+    linear-gradient(180deg, rgba(212, 160, 32, 0.12) 0%, transparent 40%),
+    linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.35) 100%),
+    repeating-linear-gradient(90deg, #1e4a18 0%, #1e4a18 16.6%, #163e12 16.6%, #163e12 33.2%);
 }
 .kit-swatch__visual--away::before {
   content: '';
   position: absolute;
   top: 12%;
   right: 12%;
-  width: 38%;
+  width: 30%;
   aspect-ratio: 1;
-  background: radial-gradient(circle at 50% 35%, rgba(200, 146, 8, 0.5) 0%, transparent 70%);
+  background:
+    radial-gradient(circle at 50% 35%, rgba(200,146,8,0.7) 0%, transparent 70%);
   border-radius: 50%;
 }
 .kit-swatch__visual--away::after {
   content: '';
   position: absolute;
-  top: 18%;
-  right: 18%;
-  width: 26%;
+  top: 17%;
+  right: 17%;
+  width: 20%;
   aspect-ratio: 1;
   clip-path: polygon(50% 0%, 98% 38%, 79% 98%, 21% 98%, 2% 38%);
-  background-color: rgba(26, 20, 13, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 .kit-swatch__visual--foil {
   background:
-    radial-gradient(ellipse at 50% 50%, rgba(255, 245, 224, 0.4) 0%, transparent 60%),
-    linear-gradient(135deg, #A87504 0%, #c89208 25%, #e08a4a 50%, #c89208 75%, #A87504 100%);
+    linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.2) 100%),
+    repeating-linear-gradient(90deg,
+      #3a8528 0%, #3a8528 8%,
+      #2e6b20 8%, #2e6b20 16%,
+      #3a8528 16%, #3a8528 24%,
+      #2e6b20 24%, #2e6b20 32%,
+      #3a8528 32%, #3a8528 40%,
+      #2e6b20 40%, #2e6b20 48%,
+      #3a8528 48%, #3a8528 56%,
+      #2e6b20 56%, #2e6b20 64%,
+      #3a8528 64%, #3a8528 72%,
+      #2e6b20 72%, #2e6b20 80%,
+      #3a8528 80%, #3a8528 88%,
+      #2e6b20 88%, #2e6b20 100%);
   background-size: 200% 200%;
   animation: foil-shift 6s ease-in-out infinite;
+  position: relative;
 }
 .kit-swatch__visual--foil::before {
   content: '';
   position: absolute;
-  top: 8%;
-  right: 8%;
-  width: 36%;
-  aspect-ratio: 0.7;
+  top: 10%;
+  right: 10%;
+  width: 32%;
+  aspect-ratio: 1;
   background:
-    radial-gradient(ellipse at 50% 15%, rgba(255, 245, 224, 0.7) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 60%, rgba(255, 245, 224, 0.4) 0%, transparent 60%);
-  clip-path: polygon(40% 0%, 60% 0%, 62% 8%, 75% 12%, 72% 28%, 85% 38%, 80% 55%, 88% 60%, 78% 75%, 65% 78%, 60% 88%, 40% 88%, 35% 78%, 22% 75%, 12% 60%, 20% 55%, 15% 38%, 28% 28%, 25% 12%, 38% 8%);
-  background-color: transparent;
-  border: 1.5px solid rgba(255, 245, 224, 0.4);
+    radial-gradient(circle at 50% 35%, #fff5e0 0%, rgba(255,245,224,0.4) 60%, transparent 80%);
+  border-radius: 50%;
+  border: 1px solid rgba(212, 160, 32, 0.5);
 }
 .kit-swatch__visual--foil::after {
   content: '★';
@@ -963,8 +975,8 @@ button:focus-visible, a:focus-visible {
   left: 50%;
   transform: translateX(-50%);
   font-size: 24px;
-  color: rgba(255, 245, 224, 0.7);
-  text-shadow: 0 0 8px rgba(255, 245, 224, 0.5);
+  color: rgba(212, 160, 32, 0.9);
+  text-shadow: 0 0 6px rgba(255, 245, 224, 0.7);
 }
 .kit-swatch__name {
   font-size: 12px;

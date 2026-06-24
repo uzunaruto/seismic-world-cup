@@ -18,35 +18,35 @@ export interface PaniniCardProps {
   jerseyNumber: number;    // typically = magnitude, but for foil/others can be different
 }
 
-// Kit color tokens (parchment cream is always the text/light surface; copper/obsidian is bg)
-// Each kit combines a base gradient with an SVG ball/trophy pattern overlay
+// Kit color tokens (parchment cream is always the text/light surface; pitch green is bg)
+// Each kit is a full football pitch with mowed stripes, white lines, and a ball
 const KIT_TOKENS: Record<Kit, { bg: string; accent: string; text: string; subtext: string; border: string; statBg: string; statText: string }> = {
   home: {
-    bg: "url('/patterns/ball-pattern-light.svg') center/cover no-repeat, linear-gradient(160deg, #A87504 0%, #8a5d03 50%, #6a4802 100%)",
+    bg: "url('/patterns/pitch-home.svg') center/cover no-repeat, linear-gradient(160deg, #4a8c3a 0%, #3d7a2c 50%, #2e6b25 100%)",
     accent: '#f5ebd7',         // parchment
-    text: '#f5ebd7',           // parchment on copper
-    subtext: 'rgba(245, 235, 215, 0.7)',
+    text: '#f5ebd7',
+    subtext: 'rgba(245, 235, 215, 0.85)',
     border: '#f5ebd7',
     statBg: 'rgba(245, 235, 215, 0.95)',
-    statText: '#0a0806',       // obsidian ink on cream
+    statText: '#1e4a18',
   },
   away: {
-    bg: "url('/patterns/ball-pattern-copper.svg') center/cover no-repeat, linear-gradient(160deg, #0a0806 0%, #1a140d 50%, #2a2018 100%)",
+    bg: "url('/patterns/pitch-away.svg') center/cover no-repeat, linear-gradient(160deg, #1e4a18 0%, #163e12 50%, #0a2208 100%)",
     accent: '#c89208',         // bright copper
     text: '#f5ebd7',
-    subtext: 'rgba(245, 235, 215, 0.6)',
+    subtext: 'rgba(245, 235, 215, 0.75)',
     border: '#c89208',
-    statBg: 'rgba(168, 117, 4, 0.18)',
+    statBg: 'rgba(168, 117, 4, 0.20)',
     statText: '#f5ebd7',
   },
   foil: {
-    bg: "url('/patterns/trophy-pattern.svg') center/cover no-repeat, linear-gradient(135deg, #A87504 0%, #c89208 25%, #e08a4a 50%, #c89208 75%, #A87504 100%)",
+    bg: "url('/patterns/pitch-foil.svg') center/cover no-repeat, linear-gradient(135deg, #3a8528 0%, #4a8c3a 25%, #2e6b20 50%, #4a8c3a 75%, #3a8528 100%)",
     accent: '#fff5e0',
-    text: '#1a140d',           // dark text on shiny bg
+    text: '#1a140d',           // dark text on green to read against lighter foil
     subtext: 'rgba(26, 20, 13, 0.75)',
     border: '#fff5e0',
-    statBg: 'rgba(26, 20, 13, 0.85)',
-    statText: '#f5ebd7',
+    statBg: 'rgba(255, 245, 224, 0.92)',
+    statText: '#1e4a18',
   },
 };
 
