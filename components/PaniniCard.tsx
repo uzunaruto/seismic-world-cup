@@ -84,31 +84,31 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
           width: '100%',
           background: tokens.accent,
           color: kit === 'foil' ? '#1a140d' : '#0a0806',
-          padding: '18px 0',
+          padding: '14px 0',
           textAlign: 'center',
           fontFamily: "'Cinzel', 'Times New Roman', serif",
           fontWeight: 700,
-          fontSize: 32,
-          letterSpacing: '0.18em',
-          borderRadius: 12,
-          marginBottom: 32,
+          fontSize: 22,
+          letterSpacing: '0.12em',
+          borderRadius: 10,
+          marginBottom: 22,
           textTransform: 'uppercase',
         }}
       >
-        Seismic Magnitudes <span style={{ opacity: 0.6 }}>·</span> World Cup 2026
+        Seismic Magnitudes <span style={{ opacity: 0.55 }}>·</span> World Cup 2026
       </div>
 
       {/* Player photo */}
       <div
         style={{
-          width: 720,
-          height: 720,
+          width: 480,
+          height: 480,
           borderRadius: '50%',
           background: tokens.accent,
-          padding: 12,
+          padding: 10,
           boxSizing: 'border-box',
-          marginBottom: 28,
-          boxShadow: `0 12px 40px rgba(0, 0, 0, ${kit === 'foil' ? '0.35' : '0.5'})`,
+          marginBottom: 24,
+          boxShadow: `0 10px 32px rgba(0, 0, 0, ${kit === 'foil' ? '0.35' : '0.5'})`,
         }}
       >
         <img
