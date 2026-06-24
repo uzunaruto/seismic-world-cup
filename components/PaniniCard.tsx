@@ -19,9 +19,10 @@ export interface PaniniCardProps {
 }
 
 // Kit color tokens (parchment cream is always the text/light surface; copper/obsidian is bg)
+// Each kit combines a base gradient with an SVG ball/trophy pattern overlay
 const KIT_TOKENS: Record<Kit, { bg: string; accent: string; text: string; subtext: string; border: string; statBg: string; statText: string }> = {
   home: {
-    bg: 'linear-gradient(160deg, #A87504 0%, #8a5d03 50%, #6a4802 100%)',
+    bg: "url('/patterns/ball-pattern-light.svg') center/cover no-repeat, linear-gradient(160deg, #A87504 0%, #8a5d03 50%, #6a4802 100%)",
     accent: '#f5ebd7',         // parchment
     text: '#f5ebd7',           // parchment on copper
     subtext: 'rgba(245, 235, 215, 0.7)',
@@ -30,7 +31,7 @@ const KIT_TOKENS: Record<Kit, { bg: string; accent: string; text: string; subtex
     statText: '#0a0806',       // obsidian ink on cream
   },
   away: {
-    bg: 'linear-gradient(160deg, #0a0806 0%, #1a140d 50%, #2a2018 100%)',
+    bg: "url('/patterns/ball-pattern-copper.svg') center/cover no-repeat, linear-gradient(160deg, #0a0806 0%, #1a140d 50%, #2a2018 100%)",
     accent: '#c89208',         // bright copper
     text: '#f5ebd7',
     subtext: 'rgba(245, 235, 215, 0.6)',
@@ -39,7 +40,7 @@ const KIT_TOKENS: Record<Kit, { bg: string; accent: string; text: string; subtex
     statText: '#f5ebd7',
   },
   foil: {
-    bg: 'linear-gradient(135deg, #A87504 0%, #c89208 25%, #e08a4a 50%, #c89208 75%, #A87504 100%)',
+    bg: "url('/patterns/trophy-pattern.svg') center/cover no-repeat, linear-gradient(135deg, #A87504 0%, #c89208 25%, #e08a4a 50%, #c89208 75%, #A87504 100%)",
     accent: '#fff5e0',
     text: '#1a140d',           // dark text on shiny bg
     subtext: 'rgba(26, 20, 13, 0.75)',

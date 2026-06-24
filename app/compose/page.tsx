@@ -15,14 +15,6 @@ const KITS: Kit[] = ['home', 'away', 'foil'];
 
 const MAX_MOTTO = 80;
 
-// Pitch layout: 4-3-3 with captain slot center-back
-const PITCH_LAYOUT: Array<{ row: 'for' | 'mid' | 'def' | 'gk'; slots: Position[] }> = [
-  { row: 'for', slots: ['forward'] },
-  { row: 'mid', slots: ['midfielder'] },
-  { row: 'def', slots: ['defender', 'captain'] },
-  { row: 'gk', slots: ['goalkeeper'] },
-];
-
 const KIT_META: Record<Kit, { name: string; sub: string; visualClass: string }> = {
   home: { name: 'Home', sub: 'Copper on cream', visualClass: 'kit-swatch__visual--home' },
   away: { name: 'Away', sub: 'Obsidian on copper', visualClass: 'kit-swatch__visual--away' },
@@ -202,27 +194,22 @@ function ComposeInner() {
             Formation
             <span className="field__counter">{POSITION_LABELS[position]}</span>
           </label>
-          <div className="pitch" role="radiogroup" aria-label="Position">
-            <span className="pitch__line" />
-            <span className="pitch__circle" />
-            {PITCH_LAYOUT.map(({ row, slots }) => (
-              <div key={row} className="pitch__col" data-row={row}>
-                {slots.map((p) => (
-                  <button
-                    key={p}
-                    type="button"
-                    role="radio"
-                    aria-checked={position === p}
-                    aria-label={POSITION_LABELS[p]}
-                    className={`pitch__slot ${p === 'captain' ? 'pitch__slot--captain' : ''} ${position === p ? 'pitch__slot--active' : ''}`}
-                    onClick={() => setPosition(p)}
-                    disabled={locked}
-                    title={POSITION_LABELS[p]}
-                  >
-                    {POSITION_SHORT[p]}
-                  </button>
-                ))}
-              </div>
+          <div className="positions" role="radiogroup" aria-label="Position">
+            {POSITIONS.map((p) => (
+              <button
+                key={p}
+                type="button"
+                role="radio"
+                aria-checked={position === p}
+                aria-label={POSITION_LABELS[p]}
+                className={`position-chip ${position === p ? 'position-chip--active' : ''}`}
+                onClick={() => setPosition(p)}
+                disabled={locked}
+              >
+                <span className="position-chip__badge">{POSITION_SHORT[p]}</span>
+                <span className="position-chip__name">{POSITION_LABELS[p]}</span>
+                <span className="position-chip__pos">P{['forward', 'midfielder', 'defender', 'goalkeeper', 'captain', 'coach'].indexOf(p) + 1}</span>
+              </button>
             ))}
           </div>
         </div>
