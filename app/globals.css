@@ -317,17 +317,16 @@ button:focus-visible, a:focus-visible {
   transform-origin: center;
   pointer-events: none;
   overflow: visible;
-  container-type: size;
-  container-name: hero-card-preview;
 }
 .hero__preview-card .card-preview-wrapper > div {
-  /* Card stays at native 1080x1620; scale dynamically to fit preview
-     container using container query height (cqh). This way the card
-     always fits the preview area regardless of viewport size. */
+  /* Card stays at native 1080x1620; scaled as a unit to fit preview.
+     Preview is clamp(480px, 78vh, 660px). On 1080p desktops it's
+     typically 540-580px tall, scale ~0.34. 0.32 is a good middle
+     ground that works for 480-660px range. */
   width: 1080px !important;
   height: 1620px !important;
   flex-shrink: 0;
-  transform: scale(calc(100cqh / 1620));
+  transform: scale(0.32) !important;
   transform-origin: center center;
 }
 .hero__preview-pill {
