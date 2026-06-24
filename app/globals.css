@@ -721,7 +721,7 @@ button:focus-visible, a:focus-visible {
   box-shadow: var(--shadow-card);
   position: relative;
   width: 100%;
-  min-height: 580px;
+  min-height: clamp(420px, 70vh, 720px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -738,7 +738,7 @@ button:focus-visible, a:focus-visible {
 }
 .composer__stage > * { position: relative; z-index: 1; }
 
-/* Card preview wrapper — size to container via aspect-ratio, no transform */
+/* Card preview wrapper — full size, card scales via JS to fit */
 .card-preview-wrapper {
   display: flex;
   align-items: center;
@@ -747,12 +747,14 @@ button:focus-visible, a:focus-visible {
   height: 100%;
   pointer-events: none;
   transition: opacity 0.3s ease;
+  overflow: hidden;
 }
 .card-preview-wrapper > div {
-  height: 100% !important;
-  width: auto !important;
-  aspect-ratio: 1080 / 1620;
-  max-width: 100%;
+  width: 1080px !important;
+  height: 1620px !important;
+  flex-shrink: 0;
+  transform-origin: center center;
+  transform: scale(var(--card-scale, 0.4));
 }
 
 .card-rendering-overlay {

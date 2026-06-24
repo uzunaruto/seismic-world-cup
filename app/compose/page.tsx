@@ -39,6 +39,34 @@ function ComposeInner() {
   const [rendering, setRendering] = useState(false);
 
   const cardRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLElement>(null);
+
+  // Dynamic card scale: fit 1080x1620 card into available stage space
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+
+    const updateScale = () => {
+      const stageRect = stage.getBoundingClientRect();
+      const padding = 24 * 2; // composer__stage padding
+      const availW = stageRect.width - padding;
+      const availH = stageRect.height - padding;
+      // Card aspect ratio 1080:1620 = 2:3
+      const scaleW = availW / 1080;
+      const scaleH = availH / 1620;
+      const scale = Math.max(0.18, Math.min(scaleW, scaleH));
+      stage.style.setProperty('--card-scale', String(scale));
+    };
+
+    updateScale();
+    const ro = new ResizeObserver(updateScale);
+    ro.observe(stage);
+    window.addEventListener('resize', updateScale);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', updateScale);
+    };
+  }, []);
 
   useEffect(() => {
     if (!loading && !user) router.push('/');
@@ -170,7 +198,7 @@ function ComposeInner() {
       </div>
 
       {/* Stage: live card preview */}
-      <section className="composer__stage" aria-label="Card preview">
+      <section className="composer__stage" aria-label="Card preview" ref={stageRef}>
         <div className="card-preview-wrapper">
           <PaniniCard ref={cardRef} {...cardProps} />
         </div>
