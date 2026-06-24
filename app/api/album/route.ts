@@ -4,10 +4,10 @@ import { getServiceSupabase } from '@/lib/supabase';
 export async function GET() {
   const supabase = getServiceSupabase();
   const { data, error } = await supabase
-    .from('public_gallery')
+    .from('public_album')
     .select('*')
-    .limit(60);
+    .limit(120);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json({ gallery: data });
+  return NextResponse.json({ album: data });
 }

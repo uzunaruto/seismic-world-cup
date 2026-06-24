@@ -1,8 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { toPng } from 'html-to-image';
+import { PaniniCard, PaniniCardProps } from '@/components/PaniniCard';
+import { generateStats, Position, Kit, POSITION_LABELS, KIT_LABELS } from '@/lib/stats';
 
 interface DiscordUser {
   discord_id: string;
@@ -15,10 +18,10 @@ interface DiscordUser {
 
 type Status = 'idle' | 'submitting' | 'pending' | 'approved' | 'rejected';
 
-const SCENES = [
-  { id: 'podium-raise', label: 'Podium raise', icon: '🏆' },
-  // future: { id: 'locker-room', label: 'Locker room', icon: '🚿' },
-];
+const POSITIONS: Position[] = ['forward', 'midfielder', 'defender', 'goalkeeper', 'captain', 'coach'];
+const KITS: Kit[] = ['home', 'away', 'foil'];
+
+const MAX_MOTTO = 80;
 
 export default function Compose() {
   const router = useRouter();
@@ -26,12 +29,16 @@ export default function Compose() {
   const detectedMag = params.get('mag');
 
   const [user, setUser] = useState<DiscordUser | null>(null);
-  const [scene, setScene] = useState('podium-raise');
-  const [magnitude, setMagnitude] = useState<number | null>(detectedMag ? parseInt(detectedMag, 10) : null);
+  const [position, setPosition] = useState<Position>('midfielder');
+  const [kit, setKit] = useState<Kit>('home');
+  const [motto, setMotto] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [submissionId, setSubmissionId] = useState<string | null>(null);
-  const [compositeUrl, setCompositeUrl] = useState<string | null>(null);
+  const [cardUrl, setCardUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [rendering, setRendering] = useState(false);
+
+  const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch('/api/auth/discord/session')
@@ -40,7 +47,9 @@ export default function Compose() {
         if (!d.user) router.push('/');
         else {
           setUser(d.user);
-          if (d.user.magnitude && !detectedMag) setMagnitude(d.user.magnitude);
+          if (d.user.magnitude && !detectedMag) {
+            // Could pre-select position based on Magnitude, but leave choice to user
+          }
         }
       });
   }, [router, detectedMag]);
@@ -62,29 +71,60 @@ export default function Compose() {
   }, [status, submissionId]);
 
   const handleSubmit = async () => {
-    if (user?.is_default_avatar) {
-      setError('You need a custom Discord avatar for face-swap to work. Set one in Discord and try again.');
+    if (!user || !cardRef.current) return;
+    if (user.is_default_avatar) {
+      setError('You need a custom Discord avatar first. Set one in Discord and try again.');
       return;
     }
+    if (!motto.trim()) {
+      setError('Pick a motto for your card.');
+      return;
+    }
+    if (motto.length > MAX_MOTTO) {
+      setError(`Motto must be ${MAX_MOTTO} characters or less.`);
+      return;
+    }
+
     setError(null);
     setStatus('submitting');
+    setRendering(true);
+
     try {
+      // 1. Render the card to PNG
+      const png = await toPng(cardRef.current, {
+        cacheBust: true,
+        pixelRatio: 2,
+        width: 1080,
+        height: 1620,
+        backgroundColor: kit === 'away' ? '#0a0806' : kit === 'foil' ? '#A87504' : '#A87504',
+        skipFonts: true,    // fonts already in DOM
+      });
+
+      // 2. Upload PNG to server
+      const formData = new FormData();
+      const blob = await (await fetch(png)).blob();
+      formData.append('card', blob, 'card.png');
+      formData.append('position', position);
+      formData.append('kit', kit);
+      formData.append('motto', motto.trim());
+
       const res = await fetch('/api/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ magnitude, baseScene: scene }),
+        body: formData,
       });
       if (!res.ok) {
-        const data = await res.json();
+        const data = await res.json().catch(() => ({}));
         throw new Error(data.message || data.error || 'Submission failed');
       }
       const data = await res.json();
       setSubmissionId(data.submissionId);
-      setCompositeUrl(data.compositeUrl);
+      setCardUrl(data.cardUrl);
       setStatus('pending');
     } catch (err: any) {
       setError(err.message);
       setStatus('idle');
+    } finally {
+      setRendering(false);
     }
   };
 
@@ -98,29 +138,46 @@ export default function Compose() {
     );
   }
 
+  const stats = generateStats(user.discord_id, position);
+  const jerseyNumber = user.magnitude ?? 7;
+  const displayName = user.global_name || user.username;
+
+  const cardProps: PaniniCardProps = {
+    username: user.username,
+    displayName,
+    pfpUrl: user.pfp_url,
+    magnitude: user.magnitude,
+    position,
+    kit,
+    motto: motto.trim(),
+    stats,
+    jerseyNumber,
+  };
+
   return (
     <main className="composer">
       <section className="composer__stage">
-        {compositeUrl ? (
-          <img src={compositeUrl} alt="Your composited podium photo" />
-        ) : (
-          <div className="loading">
+        <div className="card-preview-wrapper">
+          <PaniniCard ref={cardRef} {...cardProps} />
+        </div>
+        {rendering && (
+          <div className="card-rendering-overlay">
             <div className="spinner" />
-            {status === 'submitting' ? 'Generating your podium photo…' : 'Preview will appear here'}
+            Rendering your card…
           </div>
         )}
       </section>
 
       <aside className="composer__panel">
         <h1 className="composer__title">
-          Join the <em>champions</em>
+          Build your <em>card</em>
         </h1>
 
         <div className="user-card">
           <img src={user.pfp_url} alt={user.username} />
           <div>
             <div className="user-card__name">
-              {user.global_name || user.username}
+              {displayName}
               {user.magnitude && (
                 <span style={{ marginLeft: 8, color: 'var(--copper-bright)' }}>M{user.magnitude}</span>
               )}
@@ -130,46 +187,65 @@ export default function Compose() {
         </div>
 
         <div className="field">
-          <label className="field__label">Scene</label>
+          <label className="field__label">Position</label>
           <div className="scene-picker">
-            {SCENES.map((s) => (
+            {POSITIONS.map((p) => (
               <button
-                key={s.id}
-                className={`scene-chip ${scene === s.id ? 'scene-chip--active' : ''}`}
-                onClick={() => setScene(s.id)}
+                key={p}
+                className={`scene-chip ${position === p ? 'scene-chip--active' : ''}`}
+                onClick={() => setPosition(p)}
                 disabled={status === 'submitting' || status === 'pending'}
               >
-                <span style={{ marginRight: 6 }}>{s.icon}</span>
-                {s.label}
+                {POSITION_LABELS[p]}
               </button>
             ))}
           </div>
         </div>
 
         <div className="field">
-          <label className="field__label">Magnitude (optional)</label>
+          <label className="field__label">Kit</label>
           <div className="scene-picker">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((m) => (
+            {KITS.map((k) => (
               <button
-                key={m}
-                className={`scene-chip ${magnitude === m ? 'scene-chip--active' : ''}`}
-                onClick={() => setMagnitude(magnitude === m ? null : m)}
+                key={k}
+                className={`scene-chip ${kit === k ? 'scene-chip--active' : ''}`}
+                onClick={() => setKit(k)}
                 disabled={status === 'submitting' || status === 'pending'}
               >
-                M{m}
+                {KIT_LABELS[k]}
+                {k === 'foil' && <span style={{ marginLeft: 6, opacity: 0.7 }}>✨</span>}
               </button>
             ))}
           </div>
-          {user.magnitude && (
-            <div style={{ fontSize: 12, color: 'var(--parchment-dim)' }}>
-              Auto-detected from your Seismic Discord role. Adjust if needed.
-            </div>
-          )}
+        </div>
+
+        <div className="field">
+          <label className="field__label" style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span>Motto</span>
+            <span style={{ opacity: 0.6 }}>{motto.length}/{MAX_MOTTO}</span>
+          </label>
+          <input
+            type="text"
+            value={motto}
+            onChange={(e) => setMotto(e.target.value.slice(0, MAX_MOTTO))}
+            placeholder="We're going all the way"
+            maxLength={MAX_MOTTO}
+            disabled={status === 'submitting' || status === 'pending'}
+            style={{
+              background: 'var(--bg-elev)',
+              border: '1px solid var(--line)',
+              borderRadius: 'var(--radius)',
+              padding: '12px 16px',
+              color: 'var(--parchment)',
+              fontSize: 15,
+              fontFamily: 'inherit',
+            }}
+          />
         </div>
 
         {user.is_default_avatar && (
           <div className="status-banner status-banner--rejected">
-            ⚠️ You need a custom Discord avatar. Face-swap can't work on the default colored circle.
+            ⚠️ You need a custom Discord avatar before submitting.
           </div>
         )}
 
@@ -177,7 +253,7 @@ export default function Compose() {
           <button
             className="btn-primary"
             onClick={handleSubmit}
-            disabled={user.is_default_avatar}
+            disabled={user.is_default_avatar || !motto.trim()}
           >
             Submit to curator review →
           </button>
@@ -185,18 +261,21 @@ export default function Compose() {
         {status === 'submitting' && (
           <button className="btn-primary" disabled>
             <div className="spinner" />
-            Generating…
+            Rendering + uploading…
           </button>
         )}
         {status === 'pending' && (
           <div className="status-banner status-banner--pending">
             <div className="spinner" />
-            Waiting for curator review. This usually takes &lt; 1 hour.
+            Waiting for curator review. Usually &lt; 1 hour.
           </div>
         )}
         {status === 'approved' && (
           <div className="status-banner status-banner--approved">
-            ✅ Approved! <Link href="/gallery" style={{ marginLeft: 'auto', textDecoration: 'underline' }}>View in gallery</Link>
+            ✅ Approved!{' '}
+            <Link href="/gallery" style={{ marginLeft: 'auto', textDecoration: 'underline' }}>
+              See the album
+            </Link>
           </div>
         )}
         {status === 'rejected' && (
@@ -207,6 +286,12 @@ export default function Compose() {
 
         {error && status === 'idle' && (
           <div className="status-banner status-banner--rejected">⚠️ {error}</div>
+        )}
+
+        {cardUrl && (
+          <a href={cardUrl} download={`seismic-card-${user.username}.png`} className="btn-secondary">
+            ⬇ Download your card
+          </a>
         )}
 
         <Link href="/" style={{ fontSize: 13, color: 'var(--parchment-dim)', textAlign: 'center' }}>

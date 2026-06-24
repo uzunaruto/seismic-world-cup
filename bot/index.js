@@ -1,8 +1,7 @@
 // =============================================================================
-// Discord bot — listens for reactions on submitted messages
+// Discord bot — listens for reactions on submitted card messages
 // =============================================================================
-// Run via: npm run bot   (separate process from Next.js)
-// Deploy: Modal.com long-running service, Fly.io, Railway, or any VPS
+// Run via: npm run bot  (separate process from Next.js)
 
 const { Client, GatewayIntentBits, Events } = require('discord.js');
 const { createClient } = require('@supabase/supabase-js');
@@ -47,7 +46,7 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
 
     const { data: submission, error: subErr } = await supabase
       .from('submissions')
-      .select('id, username, global_name, pfp_url, composite_url, magnitude, base_scene, submitted_at')
+      .select('id, username, global_name, pfp_url, card_png_url, magnitude, position, kit, motto, stats, submitted_at')
       .eq('discord_message_id', messageId)
       .single();
 
@@ -88,7 +87,11 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
           displayName: submission.global_name || submission.username,
           magnitude: submission.magnitude,
           pfpUrl: submission.pfp_url,
-          compositeUrl: submission.composite_url || submission.pfp_url,
+          cardPngUrl: submission.card_png_url || submission.pfp_url,
+          position: submission.position,
+          kit: submission.kit,
+          motto: submission.motto,
+          stats: submission.stats || { pac: 0, sho: 0, pas: 0, dri: 0, ovr: 0 },
           submittedAt: submission.submitted_at,
         },
         newStatus,
@@ -97,7 +100,7 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
       console.error('[bot] discord edit failed:', editErr);
     }
 
-    console.log(`[bot] ${user.id} ${action}d submission ${submission.id} (@${submission.username})`);
+    console.log(`[bot] ${user.id} ${action}d card ${submission.id} (@${submission.username})`);
   } catch (err) {
     console.error('[bot] reaction handler error:', err);
   }
@@ -105,7 +108,7 @@ client.on(Events.MessageReactionAdd, async (reaction, user) => {
 
 const token = process.env.DISCORD_BOT_TOKEN;
 if (!token) {
-  console.error('DISCORD_BOT_TOKEN is required. Set it in .env.local or hosting env vars.');
+  console.error('DISCORD_BOT_TOKEN is required.');
   process.exit(1);
 }
 

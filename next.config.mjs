@@ -3,15 +3,12 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     remotePatterns: [
-      { protocol: 'https', hostname: 'cdn.discordapp.com' },     // Discord avatars
-      { protocol: 'https', hostname: 'media.discordapp.net' },   // Discord CDN alt
-      { protocol: 'https', hostname: '*.supabase.co' },          // Supabase storage
-      { protocol: 'https', hostname: 'replicate.delivery' },     // Replicate output
+      { protocol: 'https', hostname: 'cdn.discordapp.com' },
+      { protocol: 'https', hostname: 'media.discordapp.net' },
+      { protocol: 'https', hostname: '*.supabase.co' },
     ],
   },
-  experimental: {
-    serverActions: { bodySizeLimit: '10mb' },
-  },
+  // html-to-image generates data URLs / blobs in the browser; no special config needed
 };
 
 export default nextConfig;

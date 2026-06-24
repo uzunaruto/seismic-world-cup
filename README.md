@@ -1,200 +1,215 @@
 # Seismic World Cup 🏆
 
-> Take a selfie with the Seismic moderators — group photo as World Cup champions.
-> Community-curated via Discord emoji reactions.
+> Panini-style World Cup cards for the Seismic Magnitudes community.
+> Discord OAuth. Curator review via emoji reactions. Public album.
 
 ## What is this
 
 A web app where:
 
 1. User connects their **Discord** account (must be in the Seismic guild)
-2. Their Discord PFP gets AI-composited into a podium scene with 2 Seismic moderators
-3. **Magnitude is auto-detected from their Discord role** (M3–M9) — no bio parsing
-4. Submission goes to a Discord `#curator` channel as an embed
-5. Curator reacts with ✅ (publish to gallery) or ❌ (reject)
-6. Approved selfies appear in the public Hall of Champions
+2. **Magnitude auto-detected** from their Discord role (M3–M9)
+3. User picks position, kit, and writes a motto
+4. Card renders client-side via `html-to-image` and uploads to Supabase
+5. Submission goes to Discord `#curator` channel as an embed with the card image
+6. Curator reacts with ✅ (publish to album) or ❌ (reject)
+7. Approved cards appear in the public **Album**
 
 ## Stack
 
 - **Next.js 14** (App Router) on Vercel
-- **Discord OAuth 2.0 implicit flow** for auth (no client secret, no server-side exchange needed for OAuth — server validates token + fetches user/roles)
+- **Discord OAuth 2.0 implicit flow** for auth
 - **Supabase** (Postgres + Storage) for submission workflow
-- **Replicate** (ReActor face-swap) for AI composite
 - **discord.js** bot for reaction listener
 - **Discord webhook** for submission posts
+- **html-to-image** (client-side) for card PNG rendering — no AI face-swap, just CSS + PFP
 
 ## Project structure
 
 ```
 seismic-world-cup/
 ├── app/
-│   ├── page.tsx                      # Landing (Connect Discord button)
-│   ├── compose/                      # Composer (post-auth)
-│   ├── gallery/                      # Public Hall of Champions
+│   ├── page.tsx                        # Landing (Connect Discord)
+│   ├── compose/page.tsx                # Card builder (position + kit + motto)
+│   ├── gallery/page.tsx                # Public album
 │   ├── api/
-│   │   ├── auth/discord/session/     # POST: validate Discord token, create session
-│   │   │                             # GET: current session
-│   │   │                             # DELETE: sign out
-│   │   ├── submit/                   # POST: create submission, run AI, post to Discord
-│   │   ├── status/[id]/              # GET: poll submission status
-│   │   └── gallery/                  # GET: public approved selfies
+│   │   ├── auth/discord/session/       # POST token → session cookie
+│   │   ├── submit/                     # POST: receive PNG upload, save, post to Discord
+│   │   ├── status/[id]/                # GET: poll submission status
+│   │   └── album/                      # GET: public approved cards
 │   ├── layout.tsx
 │   └── globals.css
+├── components/
+│   └── PaniniCard.tsx                  # The card UI (1080x1620, scaled in preview)
 ├── lib/
-│   ├── auth.ts                       # Discord OAuth helpers + Magnitude detection
-│   ├── supabase.ts                   # Service + public clients
-│   ├── ai.ts                         # Replicate face-swap
-│   └── discord.ts                    # Webhook helpers
+│   ├── auth.ts                         # Discord OAuth + Magnitude detection
+│   ├── supabase.ts                     # DB clients
+│   ├── stats.ts                        # Deterministic stats by Discord ID
+│   └── discord.ts                      # Webhook helpers (embed + edit)
 ├── bot/
-│   └── index.js                      # Discord reaction listener
+│   └── index.js                        # Discord reaction listener
 ├── supabase/
-│   └── schema.sql                    # Tables + views + RLS
-├── public/
-│   └── assets/
-│       └── podium-base.png           # ⬅️  YOU PROVIDE: 2 mods on podium, 1 empty slot
+│   └── schema.sql                      # Tables + views + RLS
 ├── .env.example
 ├── next.config.mjs
 ├── package.json
 └── README.md
 ```
 
+## Card anatomy
+
+1080×1620 (Instagram portrait, 2:3), rendered client-side then uploaded.
+
+```
+┌─────────────────────────────────────┐
+│   SEISMIC MAGNITUDES · WORLD CUP    │  ← top banner
+│  ┌───────────────────────────────┐  │
+│  │                               │  │
+│  │       USER DISCORD PFP        │  │  ← circle, 720×720 native
+│  │       (no AI, actual PFP)     │  │
+│  │                               │  │
+│  └───────────────────────────────┘  │
+│                                     │
+│   Display Name                       │  ← Cinzel 64px
+│   @username                         │
+│                                     │
+│   [FW · Forward]                    │  ← position pill
+│                                     │
+│   "We're going all the way"          │  ← motto, italic
+│                                     │
+│   ┌────┬────┬────┬────┐              │
+│   │PAC │SHO │PAS │DRI │              │  ← 4 stat cells
+│   │ 88 │ 92 │ 75 │ 84 │              │
+│   └────┴────┴────┴────┘              │
+│                                     │
+│   NO. 7   [M7]   2026               │  ← bottom bar
+└─────────────────────────────────────┘
+   ROCKY (small watermark)
+```
+
+## Kits
+
+- **Home**: copper gradient (`#A87504` → `#6a4802`) with parchment text
+- **Away**: obsidian gradient with copper accents
+- **Foil ✨**: iridescent copper gradient (limited to first ~100 submitters, or manual grant)
+
+## Stats
+
+Deterministic per (Discord ID, position) — same user always gets same stats. Range 50-99, biased by position:
+
+| Position | PAC | SHO | PAS | DRI |
+|----------|-----|-----|-----|-----|
+| Forward  | 84  | 86  | 72  | 80  |
+| Midfielder | 76 | 70 | 88 | 84 |
+| Defender | 70  | 55  | 70  | 66  |
+| Goalkeeper | 58 | 45 | 62 | 68 |
+| Captain  | 78  | 80  | 80  | 80  |
+| Coach    | 50  | 50  | 92  | 60  |
+
+Each stat gets ±8 random variation (seeded by Discord ID).
+
 ## Setup
 
-### 1. Install deps
+### 1. Install
 ```bash
 cd ~/seismic-world-cup
 npm install
 ```
 
-### 2. Set up environment
+### 2. Env
 ```bash
 cp .env.example .env.local
-# Fill in Supabase + Replicate + Discord webhook/bot values
+# Fill in Supabase + Discord values
 ```
 
 ### 3. Supabase
 1. Create project at https://supabase.com/dashboard
-2. Settings → API → copy `Project URL` + `service_role` key to `.env.local`
-3. SQL editor → paste + run `supabase/schema.sql`
-4. Storage → New bucket: `composites`, public = ON
+2. Settings → API → copy Project URL + service_role key
+3. SQL editor → run `supabase/schema.sql`
+4. Storage → New bucket `cards`, public = ON
 
 ### 4. Discord (webhook + bot)
-1. **Webhook**: Server settings → Integrations → Webhooks → New webhook in `#curator` channel → copy URL to `.env.local`
-2. **Bot**: https://discord.com/developers/applications → use existing app `1509035141526192299` OR create new
-   - Bot tab → enable "Message Content Intent" + "Server Members Intent"
-   - Reset/copy bot token to `.env.local`
-   - OAuth2 → URL Generator → scopes: `bot` + `applications.commands`
-   - Bot permissions: `View Channels`, `Read Message History`, `Add Reactions`, `Manage Messages`
-   - Invite to server
-3. **Channel ID**: right-click `#curator` → Copy Channel ID (Developer Mode ON)
-4. **Guild ID**: right-click server icon → Copy Server ID (already `1343751435711414362` for Seismic)
+1. **Webhook**: Server settings → Integrations → Webhooks → new in `#curator`
+2. **Bot**: https://discord.com/developers/applications → use App 1509035141526192299 OR create new
+   - Bot tab → enable Message Content Intent + Server Members Intent
+   - Permissions: View Channels, Read Message History, Add Reactions, Manage Messages
+3. **Channel ID**: right-click `#curator` → Copy Channel ID
 
-### 5. Replicate
-1. Sign up at https://replicate.com
-2. Account → API tokens → create token → copy to `.env.local`
-
-### 6. Add the podium base image
-**Required**: place `public/assets/podium-base.png` — a wide image (1600x900 or 1920x1080) with:
-- 2 Seismic moderators on a podium
-- Empty slot in the center for the user's PFP
-- Trophy raised or visible
-
-This is the AI composite target. The face-swap model will replace the center "placeholder" face with the user's Discord PFP.
-
-### 7. **⚠️ Add redirect URI to Discord app** (manual step, no API workaround)
-VPS **cannot** programmatically add redirect URIs to Discord apps. The app owner must do this manually.
-
-For **local dev**:
+### 5. **⚠️ Add redirect URI to Discord app** (manual)
+VPS cannot PATCH Discord app URIs. After first deploy:
 1. Open https://discord.com/developers/applications/1509035141526192299/oauth2
-2. Scroll to **Redirects**
-3. Click **Add Another**, paste: `http://localhost:3000/`
-4. Click **Save Changes**
-5. Wait 30 seconds for Discord to propagate
+2. Add redirect: `https://seismic-world-cup.vercel.app/`
+3. Save, wait 30s
 
-For **production** (after deploying to Vercel):
-1. Same URL, but paste your production URL: `https://seismic-world-cup.vercel.app/`
-2. Save, wait 30s
-
-Symptom of missing redirect URI: clicking "Connect Discord" fails with `redirect_uri_mismatch` and a generic error page. No CLI/API workaround — must be done in the Dev Portal.
-
-### 8. Run locally
+### 6. Run locally
 ```bash
-# Terminal 1: Next.js
+# Terminal 1
 npm run dev
 
-# Terminal 2: Discord reaction bot
+# Terminal 2
 npm run bot
 ```
 
 ## Deployment
 
-### Vercel (Next.js)
-1. Push to GitHub: `github.com/uzunaruto/seismic-world-cup`
-2. Import in Vercel → add all env vars from `.env.example` → deploy
-3. After first deploy, **add the production redirect URI** to Discord Dev Portal (see step 7 above)
-
-### Discord bot
-Deploy as long-running service. Options:
-- **Modal.com** (serverless, supports long-running services, ~$0 idle)
-- **Fly.io** / **Railway** (small always-on)
-- **VPS** with PM2
+- **Next.js**: Vercel (push to `uzunaruto/seismic-world-cup`, import, add env vars)
+- **Bot**: Modal.com / Fly.io / Railway / VPS with PM2
 
 ## Architecture
 
 ```
-USER BROWSER              NEXT.JS                  SUPABASE         REPLICATE        DISCORD
-  │                          │                        │                │                │
-  ├─ Click Connect Discord   │                        │                │                │
-  │  (client-side redirect)  │                        │                │                │
-  │                          │                        │                │                │
-  │  ◄── #access_token=... ──┤                        │                │                │
-  │     (back from Discord)  │                        │                │                │
-  │                          │                        │                │                │
-  ├─ POST /api/auth/.../session (token)               │                │                │
-  │                          ├─ fetch /users/@me ───── │  ────────────────────────►    │
-  │                          ├─ fetch /member ─────── │  ────────────────────────►    │
-  │                          ├─ detect Magnitude      │                │                │
-  │                          ├─ save to sessions ───► │                │                │
-  │  ◄─ session cookie ──────┤                        │                │                │
-  │  redirect to /compose    │                        │                │                │
-  │                          │                        │                │                │
-  ├─ Submit ──────────────►  │                        │                │                │
-  │                          ├─ rate limit check ───► │                │                │
-  │                          ├─ insert submission ──► │                │                │
-  │                          ├─ face-swap ──────────────────────────► │                │
-  │                          ├─ upload to storage ──► │                │                │
-  │                          ├─ webhook post embed ──────────────────────────────► │
-  │                          │                        │                │       mod ✅   │
-  │                          │                        │                │                ├─ bot reaction
-  │                          │                        │                │                ├─ update status ─► │
-  │  ◄─ poll /api/status ────┤ ◄──────────────────────┤                │                │
-  │  Status: approved        │                        │                │                │
-  │  appears in /gallery     │                        │                │                │
+USER BROWSER              NEXT.JS                SUPABASE         DISCORD
+  │                          │                      │                │
+  ├─ Connect Discord         │                      │                │
+  │  (client-side redirect)  │                      │                │
+  │  ◄─ #access_token=...    │                      │                │
+  │                          │                      │                │
+  ├─ POST /api/auth/.../session (token)             │                │
+  │                          ├─ fetch /users/@me ────────────────────►│
+  │                          ├─ fetch /member ──────────────────────►│
+  │                          ├─ detect Magnitude   │                │
+  │                          ├─ save to sessions ──►│                │
+  │  ◄─ session cookie ──────┤                      │                │
+  │                          │                      │                │
+  ├─ Compose card            │                      │                │
+  │  (position + kit + motto │                      │                │
+  │   + live preview)        │                      │                │
+  │                          │                      │                │
+  ├─ Click Submit           │                      │                │
+  │  ├─ html-to-image → PNG  │                      │                │
+  │  ├─ POST /api/submit (multipart)                 │                │
+  │                          ├─ rate limit check ──►│                │
+  │                          ├─ insert submission ─►│                │
+  │                          ├─ upload PNG ────────►│ (Storage)      │
+  │                          ├─ webhook post card ──────────────────►│
+  │  ◄─ pending ─────────────┤                      │       mod ✅   │
+  │                          │                      │                ├─ bot reaction
+  │                          │                      │                ├─ update status ─►│
+  │  ◄─ poll /api/status ────┤ ◄────────────────────┤                │
+  │  Status: approved        │                      │                │
+  │  appears in /album       │                      │                │
 ```
 
 ## Security
 
-- 🔒 Discord OAuth implicit flow with `guilds.members.read` — server fetches user + roles, never trusts client data
-- ⏱️ Rate limit: max 5 submissions per 7 days per Discord ID
-- 🛡️ RLS: only `service_role` can write; public can only read `status = 'approved'`
+- 🔒 Discord OAuth implicit flow — server fetches user + roles, never trusts client data
+- ⏱️ Rate limit: 3 cards per 7 days per Discord ID (prevent spam)
+- 🛡️ RLS: only `service_role` writes; public can only read `status = 'approved'`
 - 📝 Audit log: every approval/rejection logged with Discord moderator ID
-- 🖼️ Composite URLs persisted to Supabase Storage (Replicate free tier expires after 1h)
-- ⚠️ Default-avatar users blocked from submitting (face-swap would fail)
-
-## What's still needed from user
-
-- [ ] **3 moderator photos** (2 for podium, 1 for future scenes)
-- [ ] **podium-base.png** — the AI composite target
-- [ ] **Supabase project** (URL + service_role key)
-- [ ] **Replicate API token**
-- [ ] **Discord webhook URL** for `#curator` channel
-- [ ] **Discord bot token** + channel ID + guild ID
-- [ ] **Manual step**: add redirect URI to Discord Dev Portal after first deploy
+- ⚠️ Default-avatar users blocked from submitting
+- 🛂 Motto content moderated (≤80 chars, reviewed by curator)
 
 ## Design tokens
 
-- **Primary**: Magnitude 7 copper `#A87504` (user's tier)
+- **Primary**: Magnitude 7 copper `#A87504`
 - **Accent**: Rocky orange `#c46a2f`
 - **Surface**: Obsidian `#0a0806` + parchment cream `#f5ebd7`
-- **Fonts**: Outfit (body) + Cinzel (display) + Caveat (hand-drawn accents)
+- **Fonts**: Outfit (body) + Cinzel (display) + Caveat (hand-drawn)
 - **Anti-slop**: no purple/blue gradient (Lila Rule), no Inter default, no em-dash, no fake round numbers
+
+## What's still needed
+
+- [ ] **Supabase project** (URL + service_role key)
+- [ ] **Discord webhook URL** for `#curator` channel
+- [ ] **Discord bot token** + channel ID + guild ID
+- [ ] **Manual step**: add redirect URI to Discord Dev Portal after first deploy

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { buildDiscordAuthUrl, readTokenFromHash, clearHash, DISCORD_CLIENT_ID } from '@/lib/auth';
+import { buildDiscordAuthUrl, readTokenFromHash, clearHash } from '@/lib/auth';
 
 interface DiscordUser {
   discord_id: string;
@@ -23,12 +23,9 @@ export default function Home() {
   const [authError, setAuthError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // 1. Check if we're returning from Discord OAuth (token in URL hash)
-  // 2. If yes, POST to /api/auth/discord/session, then clear hash and reload
   useEffect(() => {
     const tokenData = readTokenFromHash();
     if (!tokenData) {
-      // No token, just check existing session
       fetch('/api/auth/discord/session')
         .then((r) => r.json())
         .then((d) => setUser(d.user))
@@ -74,13 +71,13 @@ export default function Home() {
   return (
     <main className="hero">
       <span className="hero__badge">
-        <span>🏆</span> Seismic × World Cup 2026
+        <span>🏆</span> Seismic World Cup 2026
       </span>
 
-      <h1 className="hero__title">Take a selfie with the Seismic champions</h1>
+      <h1 className="hero__title">Your card. Your team. The album is waiting.</h1>
       <p className="hero__sub">
-        Connect Discord, drop your PFP on the podium beside the mods, and join
-        the Hall of Champions. Every selfie is reviewed by the curators before it ships.
+        Connect Discord, pick a position, choose your kit, write your motto.
+        Every card is reviewed by a curator before it joins the public album.
       </p>
 
       {authError && (
@@ -105,7 +102,7 @@ export default function Home() {
             Connect Discord to start
           </button>
           <Link href="/gallery" className="btn-secondary">
-            See the gallery
+            See the album
           </Link>
         </div>
       )}
@@ -114,10 +111,10 @@ export default function Home() {
         <>
           <div className="btn-row">
             <Link href="/compose" className="btn-primary">
-              Start composing →
+              Build your card →
             </Link>
             <Link href="/gallery" className="btn-secondary">
-              See the gallery
+              See the album
             </Link>
             <button onClick={handleSignOut} className="btn-secondary" style={{ fontSize: 13 }}>
               Sign out
@@ -136,17 +133,35 @@ export default function Home() {
                 )}
               </div>
               <div className="user-card__handle">
-                @{user.username} · {user.is_default_avatar ? '⚠️ default avatar (set a custom one to use face-swap)' : 'connected'}
+                @{user.username}
+                {user.is_default_avatar && ' · ⚠️ default avatar (set a custom one first)'}
               </div>
             </div>
           </div>
         </>
       )}
 
-      <div className="hero__preview" aria-label="Preview of the podium scene">
-        <div className="placeholder">
-          <div style={{ fontSize: 48, marginBottom: 12 }}>🏆</div>
-          <div>Add <code style={{ background: 'rgba(168,117,4,0.12)', padding: '2px 6px', borderRadius: 4 }}>public/assets/podium-base.png</code> to see the preview</div>
+      <div className="hero__features" style={{ marginTop: 64, maxWidth: 720, width: '100%' }}>
+        <div className="hero__feature">
+          <div className="hero__feature-icon">⚽</div>
+          <div>
+            <div className="hero__feature-title">Pick your position</div>
+            <div className="hero__feature-sub">Forward, midfielder, defender, GK, captain, or coach</div>
+          </div>
+        </div>
+        <div className="hero__feature">
+          <div className="hero__feature-icon">🎨</div>
+          <div>
+            <div className="hero__feature-title">Three kits</div>
+            <div className="hero__feature-sub">Home copper, away obsidian, or limited foil ✨</div>
+          </div>
+        </div>
+        <div className="hero__feature">
+          <div className="hero__feature-icon">🛡️</div>
+          <div>
+            <div className="hero__feature-title">Curator review</div>
+            <div className="hero__feature-sub">Mods react ✅/❌ in Discord before publishing</div>
+          </div>
         </div>
       </div>
     </main>

@@ -2,7 +2,7 @@
   "name": "seismic-world-cup",
   "version": "0.1.0",
   "private": true,
-  "description": "Take a selfie with the Seismic moderators — group photo as World Cup champions. Community-curated via Discord reactions.",
+  "description": "Panini-style World Cup cards for the Seismic Magnitudes community. Discord OAuth + curator review.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -13,10 +13,10 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",
     "discord.js": "^14.16.0",
+    "html-to-image": "^1.11.11",
     "next": "14.2.13",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "replicate": "^0.34.0"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@types/node": "^20.16.0",
