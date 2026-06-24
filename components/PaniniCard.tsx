@@ -94,7 +94,7 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
           lineHeight: 1.15,
         }}
       >
-        <div style={{ fontSize: 20, letterSpacing: '0.08em' }}>
+        <div style={{ fontSize: 16, letterSpacing: '0.06em' }}>
           Seismic Magnitudes
         </div>
         <div
