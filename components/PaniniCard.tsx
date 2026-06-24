@@ -64,10 +64,10 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
       style={{
         width: 1080,
         height: 1620,
-        padding: 32,
+        padding: 24,
         background: tokens.bg,
-        borderRadius: 36,
-        border: `6px solid ${tokens.border}`,
+        borderRadius: 30,
+        border: `5px solid ${tokens.border}`,
         boxSizing: 'border-box',
         fontFamily: "'Outfit', system-ui, sans-serif",
         color: tokens.text,
@@ -112,14 +112,14 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
       {/* Player photo */}
       <div
         style={{
-          width: 420,
-          height: 420,
+          width: 360,
+          height: 360,
           borderRadius: '50%',
           background: tokens.accent,
-          padding: 8,
+          padding: 7,
           boxSizing: 'border-box',
-          marginBottom: 22,
-          boxShadow: `0 8px 28px rgba(0, 0, 0, ${kit === 'foil' ? '0.35' : '0.5'})`,
+          marginBottom: 18,
+          boxShadow: `0 8px 24px rgba(0, 0, 0, ${kit === 'foil' ? '0.35' : '0.5'})`,
         }}
       >
         <img
@@ -137,11 +137,11 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
       </div>
 
       {/* Name + handle */}
-      <div style={{ textAlign: 'center', marginBottom: 24 }}>
+      <div style={{ textAlign: 'center', marginBottom: 16 }}>
         <div
           style={{
             fontFamily: "'Cinzel', serif",
-            fontSize: 64,
+            fontSize: 48,
             fontWeight: 700,
             letterSpacing: '0.02em',
             lineHeight: 1.05,
@@ -151,9 +151,9 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
         </div>
         <div
           style={{
-            fontSize: 28,
+            fontSize: 20,
             color: tokens.subtext,
-            marginTop: 6,
+            marginTop: 4,
             fontWeight: 500,
           }}
         >
@@ -166,13 +166,13 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
         style={{
           background: tokens.accent,
           color: kit === 'foil' ? '#1a140d' : '#0a0806',
-          padding: '12px 32px',
+          padding: '8px 24px',
           borderRadius: 999,
           fontWeight: 700,
-          fontSize: 26,
-          letterSpacing: '0.12em',
+          fontSize: 18,
+          letterSpacing: '0.1em',
           textTransform: 'uppercase',
-          marginBottom: 28,
+          marginBottom: 18,
         }}
       >
         {POSITION_SHORT[position]} {position === 'captain' ? '' : '· ' + position}
@@ -184,14 +184,14 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
           style={{
             fontFamily: "'Cinzel', serif",
             fontStyle: 'italic',
-            fontSize: 32,
+            fontSize: 22,
             textAlign: 'center',
-            maxWidth: 900,
+            maxWidth: 800,
             lineHeight: 1.3,
             color: tokens.text,
-            marginBottom: 32,
-            padding: '0 24px',
-            minHeight: 84,
+            marginBottom: 20,
+            padding: '0 16px',
+            minHeight: 60,
           }}
         >
           &ldquo;{motto}&rdquo;
@@ -203,10 +203,10 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: 16,
+          gap: 12,
           width: '100%',
-          maxWidth: 920,
-          marginBottom: 32,
+          maxWidth: 800,
+          marginBottom: 20,
         }}
       >
         {(['pac', 'sho', 'pas', 'dri'] as const).map((key) => (
@@ -215,16 +215,16 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
             style={{
               background: tokens.statBg,
               color: tokens.statText,
-              borderRadius: 16,
-              padding: '20px 12px',
+              borderRadius: 12,
+              padding: '12px 8px',
               textAlign: 'center',
               fontWeight: 800,
             }}
           >
-            <div style={{ fontSize: 22, letterSpacing: '0.15em', textTransform: 'uppercase', opacity: 0.7 }}>
+            <div style={{ fontSize: 16, letterSpacing: '0.12em', textTransform: 'uppercase', opacity: 0.7 }}>
               {key}
             </div>
-            <div style={{ fontSize: 64, lineHeight: 1, marginTop: 4, fontFamily: "'Cinzel', serif" }}>
+            <div style={{ fontSize: 44, lineHeight: 1, marginTop: 3, fontFamily: "'Cinzel', serif" }}>
               {stats[key]}
             </div>
           </div>
@@ -238,20 +238,20 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '20px 36px',
+          padding: '14px 24px',
           background: tokens.accent,
           color: kit === 'foil' ? '#1a140d' : '#0a0806',
-          borderRadius: 16,
+          borderRadius: 14,
           marginTop: 'auto',
         }}
       >
         {/* Jersey number */}
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-          <span style={{ fontSize: 22, fontWeight: 600, opacity: 0.6, letterSpacing: '0.1em' }}>NO.</span>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
+          <span style={{ fontSize: 16, fontWeight: 600, opacity: 0.6, letterSpacing: '0.1em' }}>NO.</span>
           <span
             style={{
               fontFamily: "'Cinzel', serif",
-              fontSize: 80,
+              fontSize: 56,
               fontWeight: 800,
               lineHeight: 1,
               color: magColor,
@@ -267,12 +267,12 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
           style={{
             background: magColor,
             color: '#0a0806',
-            padding: '10px 24px',
+            padding: '6px 16px',
             borderRadius: 999,
             fontFamily: "'Cinzel', serif",
-            fontSize: 32,
+            fontSize: 22,
             fontWeight: 800,
-            letterSpacing: '0.1em',
+            letterSpacing: '0.08em',
           }}
         >
           {magLabel}
@@ -282,7 +282,7 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
         <div
           style={{
             fontFamily: "'Cinzel', serif",
-            fontSize: 36,
+            fontSize: 24,
             fontWeight: 700,
             opacity: 0.7,
             letterSpacing: '0.05em',
