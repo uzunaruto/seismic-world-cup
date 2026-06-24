@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     const { data: rateData } = await supabase
       .rpc('get_submission_count', { p_discord_id: session.discord_id, p_days: 7 })
       .single();
-    const recentCount = rateData?.count ?? 0;
+    const recentCount = (rateData as { count?: number } | null)?.count ?? 0;
     if (recentCount >= 3) {
       return NextResponse.json(
         { error: 'rate_limited', message: 'Max 3 cards per 7 days. Wait for some to be approved/rejected first.' },
