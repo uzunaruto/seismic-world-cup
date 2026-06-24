@@ -202,33 +202,42 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: 12,
+          gridTemplateColumns: 'repeat(5, 1fr)',
+          gap: 10,
           width: '100%',
-          maxWidth: 800,
+          maxWidth: 880,
           marginBottom: 20,
         }}
       >
-        {(['pac', 'sho', 'pas', 'dri'] as const).map((key) => (
-          <div
-            key={key}
-            style={{
-              background: tokens.statBg,
-              color: tokens.statText,
-              borderRadius: 12,
-              padding: '12px 8px',
-              textAlign: 'center',
-              fontWeight: 800,
-            }}
-          >
-            <div style={{ fontSize: 16, letterSpacing: '0.12em', textTransform: 'uppercase', opacity: 0.7 }}>
-              {key}
+        {(['pac', 'sho', 'pas', 'dri', 'ovr'] as const).map((key) => {
+          const isOvr = key === 'ovr';
+          return (
+            <div
+              key={key}
+              style={{
+                background: isOvr
+                  ? (kit === 'foil' ? '#1a140d' : magColor)
+                  : tokens.statBg,
+                color: isOvr
+                  ? (kit === 'foil' ? '#fff5e0' : '#0a0806')
+                  : tokens.statText,
+                borderRadius: 12,
+                padding: '14px 6px',
+                textAlign: 'center',
+                fontWeight: 800,
+                border: isOvr ? `2px solid ${kit === 'foil' ? '#fff5e0' : '#0a0806'}` : 'none',
+                boxShadow: isOvr ? '0 4px 14px rgba(0,0,0,0.35)' : 'none',
+              }}
+            >
+              <div style={{ fontSize: 18, letterSpacing: '0.14em', textTransform: 'uppercase', opacity: isOvr ? 1 : 0.7, fontWeight: isOvr ? 800 : 700 }}>
+                {key}
+              </div>
+              <div style={{ fontSize: isOvr ? 52 : 44, lineHeight: 1, marginTop: 4, fontFamily: "'Cinzel', serif" }}>
+                {stats[key]}
+              </div>
             </div>
-            <div style={{ fontSize: 44, lineHeight: 1, marginTop: 3, fontFamily: "'Cinzel', serif" }}>
-              {stats[key]}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Bottom bar: jersey number + magnitude + year */}
