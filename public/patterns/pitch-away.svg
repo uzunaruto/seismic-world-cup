@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" preserveAspectRatio="xMidYMid slice">
   <defs>
     <linearGradient id="flood" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#fff5b0" stop-opacity="0.35"/>
-      <stop offset="40%" stop-color="#ffd060" stop-opacity="0.15"/>
+      <stop offset="0%" stop-color="#fff5b0" stop-opacity="0.45"/>
+      <stop offset="40%" stop-color="#ffd060" stop-opacity="0.20"/>
       <stop offset="100%" stop-color="#000" stop-opacity="0"/>
     </linearGradient>
     <radialGradient id="floodbeam" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#fff5b0" stop-opacity="0.6"/>
-      <stop offset="40%" stop-color="#ffd060" stop-opacity="0.3"/>
+      <stop offset="0%" stop-color="#fff5b0" stop-opacity="0.75"/>
+      <stop offset="40%" stop-color="#ffd060" stop-opacity="0.35"/>
       <stop offset="100%" stop-color="#000" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="focusA" cx="50%" cy="50%" r="55%">
@@ -25,7 +25,7 @@
       <stop offset="100%" stop-color="#000" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="standSil" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0a1a08" stop-opacity="0.7"/>
+      <stop offset="0%" stop-color="#0a1a08" stop-opacity="0.75"/>
       <stop offset="100%" stop-color="#0a1a08" stop-opacity="0"/>
     </linearGradient>
     <linearGradient id="flag" x1="0" y1="0" x2="1" y2="0">
@@ -34,12 +34,7 @@
     </linearGradient>
   </defs>
 
-  <!-- Stadium crowd silhouette at top (stands) -->
-  <g opacity="0.85">
-    <path d="M 0 0 L 0 70 L 30 60 L 50 75 L 80 55 L 110 80 L 140 60 L 170 78 L 200 55 L 230 75 L 260 58 L 290 80 L 320 60 L 350 75 L 380 55 L 410 78 L 440 60 L 470 76 L 500 55 L 530 78 L 560 60 L 590 75 L 620 56 L 650 78 L 680 60 L 710 76 L 740 55 L 770 78 L 800 60 L 830 75 L 860 58 L 890 78 L 920 60 L 950 76 L 980 55 L 1010 78 L 1040 60 L 1080 75 L 1080 0 Z" fill="url(#standSil)"/>
-  </g>
-
-  <!-- Darker mowed stripes -->
+  <!-- 1. Darker mowed stripes (base) -->
   <g>
     <rect x="0" y="0" width="1080" height="135" fill="#1e4a18"/>
     <rect x="0" y="135" width="1080" height="135" fill="#143a10"/>
@@ -53,67 +48,72 @@
     <rect x="0" y="1215" width="1080" height="135" fill="#143a10"/>
   </g>
 
-  <!-- Grass texture (darker) -->
-  <g fill="#0a2208" opacity="0.4">
+  <!-- 2. Grass texture (darker) -->
+  <g fill="#0a2208" opacity="0.55">
     <path d="M40 50 q1.5 -7 3 0 z"/><path d="M120 100 q1 -5 2 0 z"/><path d="M200 30 q1.5 -6 3 0 z"/><path d="M280 120 q1 -4 2 0 z"/><path d="M360 60 q1.5 -7 3 0 z"/><path d="M440 110 q1 -5 2 0 z"/><path d="M520 40 q1.5 -6 3 0 z"/><path d="M600 100 q1 -4 2 0 z"/><path d="M680 70 q1.5 -7 3 0 z"/><path d="M760 30 q1 -5 2 0 z"/><path d="M840 110 q1.5 -6 3 0 z"/><path d="M920 50 q1 -4 2 0 z"/><path d="M1000 120 q1.5 -7 3 0 z"/>
     <path d="M30 200 q1 -4 2 0 z"/><path d="M110 280 q1.5 -6 3 0 z"/><path d="M190 230 q1 -5 2 0 z"/><path d="M270 300 q1.5 -7 3 0 z"/><path d="M350 220 q1 -4 2 0 z"/><path d="M430 290 q1.5 -6 3 0 z"/><path d="M510 240 q1 -5 2 0 z"/><path d="M590 310 q1.5 -7 3 0 z"/><path d="M670 230 q1 -4 2 0 z"/><path d="M750 290 q1.5 -6 3 0 z"/><path d="M830 220 q1 -5 2 0 z"/><path d="M910 300 q1.5 -7 3 0 z"/><path d="M990 240 q1 -4 2 0 z"/>
     <path d="M20 400 q1.5 -7 3 0 z"/><path d="M100 460 q1 -4 2 0 z"/><path d="M180 420 q1.5 -6 3 0 z"/><path d="M260 480 q1 -5 2 0 z"/><path d="M340 410 q1.5 -7 3 0 z"/><path d="M420 470 q1 -4 2 0 z"/><path d="M500 430 q1.5 -6 3 0 z"/><path d="M580 490 q1 -5 2 0 z"/><path d="M660 420 q1.5 -7 3 0 z"/><path d="M740 470 q1 -4 2 0 z"/><path d="M820 430 q1.5 -6 3 0 z"/><path d="M900 490 q1 -5 2 0 z"/><path d="M980 420 q1.5 -7 3 0 z"/>
   </g>
 
-  <!-- Stadium floodlight glow at top -->
+  <!-- 3. Stadium crowd silhouette at top (stands) -->
+  <g opacity="0.9">
+    <path d="M 0 0 L 0 70 L 30 60 L 50 75 L 80 55 L 110 80 L 140 60 L 170 78 L 200 55 L 230 75 L 260 58 L 290 80 L 320 60 L 350 75 L 380 55 L 410 78 L 440 60 L 470 76 L 500 55 L 530 78 L 560 60 L 590 75 L 620 56 L 650 78 L 680 60 L 710 76 L 740 55 L 770 78 L 800 60 L 830 75 L 860 58 L 890 78 L 920 60 L 950 76 L 980 55 L 1010 78 L 1040 60 L 1080 75 L 1080 0 Z" fill="url(#standSil)"/>
+  </g>
+
+  <!-- 4. Stadium floodlight glow at top (on top of crowd) -->
   <rect width="1080" height="600" fill="url(#flood)"/>
 
-  <!-- Stadium floodlight beams (4 corner light towers) -->
-  <g opacity="0.7">
-    <ellipse cx="120" cy="0" rx="180" ry="380" fill="url(#floodbeam)" transform="rotate(20 120 0)"/>
-    <ellipse cx="960" cy="0" rx="180" ry="380" fill="url(#floodbeam)" transform="rotate(-20 960 0)"/>
+  <!-- 5. Stadium floodlight beams (4 corner light towers) -->
+  <g opacity="0.75">
+    <ellipse cx="120" cy="0" rx="200" ry="420" fill="url(#floodbeam)" transform="rotate(20 120 0)"/>
+    <ellipse cx="960" cy="0" rx="200" ry="420" fill="url(#floodbeam)" transform="rotate(-20 960 0)"/>
   </g>
 
-  <!-- Stadium floodlight fixtures (visible as bright spots) -->
-  <g opacity="0.95">
-    <circle cx="120" cy="40" r="14" fill="#fff5b0"/>
-    <circle cx="120" cy="40" r="20" fill="#fff5b0" opacity="0.4"/>
-    <circle cx="960" cy="40" r="14" fill="#fff5b0"/>
-    <circle cx="960" cy="40" r="20" fill="#fff5b0" opacity="0.4"/>
+  <!-- 6. Stadium floodlight fixtures (visible as bright spots) -->
+  <g>
+    <circle cx="120" cy="40" r="16" fill="#fff5b0"/>
+    <circle cx="120" cy="40" r="26" fill="#fff5b0" opacity="0.4"/>
+    <circle cx="960" cy="40" r="16" fill="#fff5b0"/>
+    <circle cx="960" cy="40" r="26" fill="#fff5b0" opacity="0.4"/>
   </g>
 
-  <!-- Lens flare diagonal streak -->
-  <g opacity="0.25">
-    <line x1="0" y1="200" x2="1080" y2="80" stroke="#fff5b0" stroke-width="1.5"/>
+  <!-- 7. Lens flare diagonal streak -->
+  <g opacity="0.3">
+    <line x1="0" y1="200" x2="1080" y2="80" stroke="#fff5b0" stroke-width="1.8"/>
   </g>
 
-  <!-- Pitch lines (white, slightly faded for night) -->
-  <g stroke="rgba(255,255,255,0.50)" stroke-width="5" fill="none">
+  <!-- 8. Pitch lines (white, slightly faded for night) -->
+  <g stroke="rgba(255,255,255,0.55)" stroke-width="5" fill="none">
     <rect x="40" y="40" width="1000" height="1270" rx="6"/>
     <line x1="40" y1="675" x2="1040" y2="675"/>
     <circle cx="540" cy="675" r="110"/>
-    <circle cx="540" cy="675" r="5" fill="rgba(255,255,255,0.5)"/>
+    <circle cx="540" cy="675" r="5" fill="rgba(255,255,255,0.55)"/>
   </g>
-  <g stroke="rgba(255,255,255,0.50)" stroke-width="4" fill="none">
+  <g stroke="rgba(255,255,255,0.55)" stroke-width="4" fill="none">
     <rect x="240" y="40" width="600" height="180"/>
     <rect x="380" y="40" width="320" height="80"/>
-    <circle cx="540" cy="290" r="5" fill="rgba(255,255,255,0.5)"/>
+    <circle cx="540" cy="290" r="5" fill="rgba(255,255,255,0.55)"/>
     <rect x="240" y="1130" width="600" height="180"/>
     <rect x="380" y="1230" width="320" height="80"/>
-    <circle cx="540" cy="1060" r="5" fill="rgba(255,255,255,0.5)"/>
+    <circle cx="540" cy="1060" r="5" fill="rgba(255,255,255,0.55)"/>
   </g>
-  <g stroke="rgba(255,255,255,0.50)" stroke-width="4" fill="none">
+  <g stroke="rgba(255,255,255,0.55)" stroke-width="4" fill="none">
     <path d="M 380 220 A 80 80 0 0 1 700 220"/>
     <path d="M 380 1130 A 80 80 0 0 0 700 1130"/>
   </g>
 
-  <!-- Corner flag (top-right) -->
-  <g transform="translate(960 80)" opacity="0.85">
+  <!-- 9. Corner flag (top-right) -->
+  <g transform="translate(960 80)" opacity="0.9">
     <line x1="0" y1="0" x2="0" y2="120" stroke="#f5ebd7" stroke-width="3"/>
     <path d="M 0 0 L 50 8 L 45 25 L 0 18 Z" fill="url(#flag)" stroke="#3a0808" stroke-width="1.5"/>
   </g>
 
-  <!-- Center focus vignette (strong for night) -->
+  <!-- 10. Center focus vignette (strong for night) -->
   <rect width="1080" height="1350" fill="url(#focusA)"/>
 
-  <!-- Ball top-right (copper, glowing, with shadow) -->
-  <g transform="translate(880 280)" opacity="0.65">
-    <ellipse cx="0" cy="120" rx="60" ry="8" fill="url(#ballShadow)"/>
+  <!-- 11. Ball top-right (copper, glowing, with shadow) -->
+  <g transform="translate(880 320)" opacity="0.75">
+    <ellipse cx="0" cy="120" rx="60" ry="9" fill="url(#ballShadow)"/>
     <circle r="85" fill="url(#ballA)"/>
     <polygon points="0,-43 40,-13 25,35 -25,35 -40,-13" fill="rgba(0,0,0,0.6)" stroke="rgba(245,235,215,0.3)" stroke-width="2"/>
     <line x1="40" y1="-13" x2="58" y2="-18" stroke="rgba(245,235,215,0.25)" stroke-width="1.5"/>
@@ -122,8 +122,8 @@
     <line x1="-25" y1="35" x2="-40" y2="60" stroke="rgba(245,235,215,0.25)" stroke-width="1.5"/>
   </g>
 
-  <!-- Ball bottom-left (smaller) -->
-  <g transform="translate(180 1100)" opacity="0.4">
+  <!-- 12. Ball bottom-left (smaller) -->
+  <g transform="translate(180 1100)" opacity="0.5">
     <ellipse cx="0" cy="60" rx="40" ry="6" fill="url(#ballShadow)"/>
     <circle r="55" fill="url(#ballA)"/>
     <polygon points="0,-27 26,-9 16,23 -16,23 -26,-9" fill="rgba(0,0,0,0.55)"/>

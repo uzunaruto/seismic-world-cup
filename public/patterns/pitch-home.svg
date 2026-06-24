@@ -1,19 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" preserveAspectRatio="xMidYMid slice">
   <defs>
     <linearGradient id="skyH" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#7ec0ff" stop-opacity="0.35"/>
-      <stop offset="35%" stop-color="#7ec0ff" stop-opacity="0.05"/>
+      <stop offset="0%" stop-color="#7ec0ff" stop-opacity="0.85"/>
+      <stop offset="40%" stop-color="#7ec0ff" stop-opacity="0.45"/>
       <stop offset="100%" stop-color="#7ec0ff" stop-opacity="0"/>
     </linearGradient>
     <radialGradient id="sun" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#fff8c8" stop-opacity="0.7"/>
-      <stop offset="50%" stop-color="#fff8c8" stop-opacity="0.15"/>
-      <stop offset="100%" stop-color="#fff8c8" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="centerH" cx="50%" cy="50%" r="55%">
-      <stop offset="0%" stop-color="#000" stop-opacity="0.20"/>
-      <stop offset="60%" stop-color="#000" stop-opacity="0.05"/>
-      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="0%" stop-color="#fff8c8" stop-opacity="0.85"/>
+      <stop offset="35%" stop-color="#fff5b0" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#fff5b0" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="ballH" cx="50%" cy="35%" r="65%">
       <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
@@ -21,7 +16,7 @@
       <stop offset="100%" stop-color="#ffffff" stop-opacity="0.15"/>
     </radialGradient>
     <radialGradient id="ballShadow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#000" stop-opacity="0.5"/>
+      <stop offset="0%" stop-color="#000" stop-opacity="0.55"/>
       <stop offset="100%" stop-color="#000" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="flag" x1="0" y1="0" x2="1" y2="0">
@@ -30,11 +25,7 @@
     </linearGradient>
   </defs>
 
-  <!-- Sky band at top -->
-  <rect x="0" y="0" width="1080" height="280" fill="url(#skyH)"/>
-  <circle cx="900" cy="120" r="160" fill="url(#sun)"/>
-
-  <!-- Bright mowed stripes (lighter green) -->
+  <!-- 1. Mowed green stripes (base) -->
   <g>
     <rect x="0" y="0" width="1080" height="135" fill="#5ca046"/>
     <rect x="0" y="135" width="1080" height="135" fill="#4a8c3a"/>
@@ -48,77 +39,83 @@
     <rect x="0" y="1215" width="1080" height="135" fill="#4a8c3a"/>
   </g>
 
-  <!-- Dense grass blade texture (varied greens) -->
-  <g opacity="0.7">
-    <g fill="#0a3a0a" opacity="0.5">
-      <path d="M30 60 q1.5 -7 3 0 z"/><path d="M90 130 q1 -4 2 0 z"/><path d="M150 80 q1.5 -6 3 0 z"/><path d="M210 200 q1 -5 2 0 z"/><path d="M270 100 q1.5 -7 3 0 z"/><path d="M330 240 q1 -4 2 0 z"/><path d="M390 90 q1.5 -6 3 0 z"/><path d="M450 180 q1 -5 2 0 z"/><path d="M510 60 q1.5 -7 3 0 z"/><path d="M570 220 q1 -4 2 0 z"/><path d="M630 110 q1.5 -6 3 0 z"/><path d="M690 240 q1 -5 2 0 z"/><path d="M750 80 q1.5 -7 3 0 z"/><path d="M810 200 q1 -4 2 0 z"/><path d="M870 130 q1.5 -6 3 0 z"/><path d="M930 250 q1 -5 2 0 z"/><path d="M990 90 q1.5 -7 3 0 z"/><path d="M1050 180 q1 -4 2 0 z"/>
-      <path d="M20 320 q1 -5 2 0 z"/><path d="M80 400 q1.5 -6 3 0 z"/><path d="M140 350 q1 -4 2 0 z"/><path d="M200 450 q1.5 -7 3 0 z"/><path d="M260 330 q1 -5 2 0 z"/><path d="M320 410 q1.5 -6 3 0 z"/><path d="M380 370 q1 -4 2 0 z"/><path d="M440 440 q1.5 -7 3 0 z"/><path d="M500 340 q1 -5 2 0 z"/><path d="M560 420 q1.5 -6 3 0 z"/><path d="M620 360 q1 -4 2 0 z"/><path d="M680 450 q1.5 -7 3 0 z"/><path d="M740 350 q1 -5 2 0 z"/><path d="M800 430 q1.5 -6 3 0 z"/><path d="M860 370 q1 -4 2 0 z"/><path d="M920 440 q1.5 -7 3 0 z"/><path d="M980 340 q1 -5 2 0 z"/><path d="M1040 420 q1.5 -6 3 0 z"/>
-      <path d="M10 580 q1.5 -7 3 0 z"/><path d="M70 660 q1 -4 2 0 z"/><path d="M130 620 q1.5 -6 3 0 z"/><path d="M190 700 q1 -5 2 0 z"/><path d="M250 590 q1.5 -7 3 0 z"/><path d="M310 680 q1 -4 2 0 z"/><path d="M370 630 q1.5 -6 3 0 z"/><path d="M430 710 q1 -5 2 0 z"/><path d="M490 580 q1.5 -7 3 0 z"/><path d="M550 670 q1 -4 2 0 z"/><path d="M610 620 q1.5 -6 3 0 z"/><path d="M670 700 q1 -5 2 0 z"/><path d="M730 590 q1.5 -7 3 0 z"/><path d="M790 680 q1 -4 2 0 z"/><path d="M850 630 q1.5 -6 3 0 z"/><path d="M910 710 q1 -5 2 0 z"/><path d="M970 600 q1.5 -7 3 0 z"/><path d="M1030 690 q1 -4 2 0 z"/>
-      <path d="M40 840 q1.5 -6 3 0 z"/><path d="M100 920 q1 -5 2 0 z"/><path d="M160 870 q1.5 -7 3 0 z"/><path d="M220 950 q1 -4 2 0 z"/><path d="M280 860 q1.5 -6 3 0 z"/><path d="M340 940 q1 -5 2 0 z"/><path d="M400 880 q1.5 -7 3 0 z"/><path d="M460 960 q1 -4 2 0 z"/><path d="M520 870 q1.5 -6 3 0 z"/><path d="M580 950 q1 -5 2 0 z"/><path d="M640 890 q1.5 -7 3 0 z"/><path d="M700 970 q1 -4 2 0 z"/><path d="M760 860 q1.5 -6 3 0 z"/><path d="M820 940 q1 -5 2 0 z"/><path d="M880 880 q1.5 -7 3 0 z"/><path d="M940 960 q1 -4 2 0 z"/><path d="M1000 870 q1.5 -6 3 0 z"/><path d="M1060 950 q1 -5 2 0 z"/>
-      <path d="M20 1100 q1.5 -7 3 0 z"/><path d="M80 1180 q1 -4 2 0 z"/><path d="M140 1130 q1.5 -6 3 0 z"/><path d="M200 1210 q1 -5 2 0 z"/><path d="M260 1110 q1.5 -7 3 0 z"/><path d="M320 1190 q1 -4 2 0 z"/><path d="M380 1140 q1.5 -6 3 0 z"/><path d="M440 1220 q1 -5 2 0 z"/><path d="M500 1110 q1.5 -7 3 0 z"/><path d="M560 1190 q1 -4 2 0 z"/><path d="M620 1140 q1.5 -6 3 0 z"/><path d="M680 1220 q1 -5 2 0 z"/><path d="M740 1110 q1.5 -7 3 0 z"/><path d="M800 1190 q1 -4 2 0 z"/><path d="M860 1140 q1.5 -6 3 0 z"/><path d="M920 1220 q1 -5 2 0 z"/><path d="M980 1110 q1.5 -7 3 0 z"/><path d="M1040 1190 q1 -4 2 0 z"/>
-    </g>
-    <g fill="#7ac85c" opacity="0.35">
-      <path d="M50 80 q1.5 -6 3 0 z"/><path d="M110 160 q1 -5 2 0 z"/><path d="M170 110 q1.5 -7 3 0 z"/><path d="M230 220 q1 -4 2 0 z"/><path d="M290 100 q1.5 -6 3 0 z"/><path d="M350 240 q1 -5 2 0 z"/><path d="M410 80 q1.5 -7 3 0 z"/><path d="M470 200 q1 -4 2 0 z"/><path d="M530 60 q1.5 -6 3 0 z"/><path d="M590 220 q1 -5 2 0 z"/><path d="M650 110 q1.5 -7 3 0 z"/><path d="M710 240 q1 -4 2 0 z"/><path d="M770 100 q1.5 -6 3 0 z"/><path d="M830 220 q1 -5 2 0 z"/><path d="M890 80 q1.5 -7 3 0 z"/><path d="M950 200 q1 -4 2 0 z"/><path d="M1010 110 q1.5 -6 3 0 z"/>
-      <path d="M30 350 q1.5 -7 3 0 z"/><path d="M90 430 q1 -4 2 0 z"/><path d="M150 380 q1.5 -6 3 0 z"/><path d="M210 460 q1 -5 2 0 z"/><path d="M270 350 q1.5 -7 3 0 z"/><path d="M330 430 q1 -4 2 0 z"/><path d="M390 390 q1.5 -6 3 0 z"/><path d="M450 460 q1 -5 2 0 z"/><path d="M510 350 q1.5 -7 3 0 z"/><path d="M570 430 q1 -4 2 0 z"/><path d="M630 390 q1.5 -6 3 0 z"/><path d="M690 460 q1 -5 2 0 z"/><path d="M750 360 q1.5 -7 3 0 z"/><path d="M810 430 q1 -4 2 0 z"/><path d="M870 390 q1.5 -6 3 0 z"/><path d="M930 460 q1 -5 2 0 z"/><path d="M990 370 q1.5 -7 3 0 z"/><path d="M1050 440 q1 -4 2 0 z"/>
-    </g>
+  <!-- 2. Grass blade texture (darker) -->
+  <g fill="#2e6020" opacity="0.55">
+    <path d="M40 50 q1.5 -7 3 0 z"/><path d="M90 130 q1 -4 2 0 z"/><path d="M150 80 q1.5 -6 3 0 z"/><path d="M210 200 q1 -5 2 0 z"/><path d="M270 100 q1.5 -7 3 0 z"/><path d="M330 240 q1 -4 2 0 z"/><path d="M390 90 q1.5 -6 3 0 z"/><path d="M450 180 q1 -5 2 0 z"/><path d="M510 60 q1.5 -7 3 0 z"/><path d="M570 220 q1 -4 2 0 z"/><path d="M630 110 q1.5 -6 3 0 z"/><path d="M690 240 q1 -5 2 0 z"/><path d="M750 80 q1.5 -7 3 0 z"/><path d="M810 200 q1 -4 2 0 z"/><path d="M870 130 q1.5 -6 3 0 z"/><path d="M930 250 q1 -5 2 0 z"/><path d="M990 90 q1.5 -7 3 0 z"/><path d="M1050 180 q1 -4 2 0 z"/>
+    <path d="M20 320 q1 -5 2 0 z"/><path d="M80 400 q1.5 -6 3 0 z"/><path d="M140 350 q1 -4 2 0 z"/><path d="M200 450 q1.5 -7 3 0 z"/><path d="M260 330 q1 -5 2 0 z"/><path d="M320 410 q1.5 -6 3 0 z"/><path d="M380 370 q1 -4 2 0 z"/><path d="M440 440 q1.5 -7 3 0 z"/><path d="M500 340 q1 -5 2 0 z"/><path d="M560 420 q1.5 -6 3 0 z"/><path d="M620 360 q1 -4 2 0 z"/><path d="M680 450 q1.5 -7 3 0 z"/><path d="M740 350 q1 -5 2 0 z"/><path d="M800 430 q1.5 -6 3 0 z"/><path d="M860 370 q1 -4 2 0 z"/><path d="M920 440 q1.5 -7 3 0 z"/><path d="M980 340 q1 -5 2 0 z"/><path d="M1040 420 q1.5 -6 3 0 z"/>
+    <path d="M10 580 q1.5 -7 3 0 z"/><path d="M70 660 q1 -4 2 0 z"/><path d="M130 620 q1.5 -6 3 0 z"/><path d="M190 700 q1 -5 2 0 z"/><path d="M250 590 q1.5 -7 3 0 z"/><path d="M310 680 q1 -4 2 0 z"/><path d="M370 630 q1.5 -6 3 0 z"/><path d="M430 710 q1 -5 2 0 z"/><path d="M490 580 q1.5 -7 3 0 z"/><path d="M550 670 q1 -4 2 0 z"/><path d="M610 620 q1.5 -6 3 0 z"/><path d="M670 700 q1 -5 2 0 z"/><path d="M730 590 q1.5 -7 3 0 z"/><path d="M790 680 q1 -4 2 0 z"/><path d="M850 630 q1.5 -6 3 0 z"/><path d="M910 710 q1 -5 2 0 z"/><path d="M970 600 q1.5 -7 3 0 z"/><path d="M1030 690 q1.5 -6 3 0 z"/>
+    <path d="M40 840 q1.5 -6 3 0 z"/><path d="M100 920 q1 -5 2 0 z"/><path d="M160 870 q1.5 -7 3 0 z"/><path d="M220 950 q1 -4 2 0 z"/><path d="M280 860 q1.5 -6 3 0 z"/><path d="M340 940 q1 -5 2 0 z"/><path d="M400 880 q1.5 -7 3 0 z"/><path d="M460 960 q1 -4 2 0 z"/><path d="M520 870 q1.5 -6 3 0 z"/><path d="M580 950 q1 -5 2 0 z"/><path d="M640 890 q1.5 -7 3 0 z"/><path d="M700 970 q1 -4 2 0 z"/><path d="M760 860 q1.5 -6 3 0 z"/><path d="M820 940 q1 -5 2 0 z"/><path d="M880 880 q1.5 -7 3 0 z"/><path d="M940 960 q1 -4 2 0 z"/><path d="M1000 870 q1.5 -6 3 0 z"/><path d="M1060 950 q1 -5 2 0 z"/>
+    <path d="M20 1100 q1.5 -7 3 0 z"/><path d="M80 1180 q1 -4 2 0 z"/><path d="M140 1130 q1.5 -6 3 0 z"/><path d="M200 1210 q1 -5 2 0 z"/><path d="M260 1110 q1.5 -7 3 0 z"/><path d="M320 1190 q1 -4 2 0 z"/><path d="M380 1140 q1.5 -6 3 0 z"/><path d="M440 1220 q1 -5 2 0 z"/><path d="M500 1110 q1.5 -7 3 0 z"/><path d="M560 1190 q1 -4 2 0 z"/><path d="M620 1140 q1.5 -6 3 0 z"/><path d="M680 1220 q1 -5 2 0 z"/><path d="M740 1110 q1.5 -7 3 0 z"/><path d="M800 1190 q1 -4 2 0 z"/><path d="M860 1140 q1.5 -6 3 0 z"/><path d="M920 1220 q1 -5 2 0 z"/><path d="M980 1110 q1.5 -7 3 0 z"/><path d="M1040 1190 q1 -4 2 0 z"/>
   </g>
 
-  <!-- White pitch lines (crisp, day match) -->
+  <!-- 3. Sky band (top, AFTER grass so it shows) -->
+  <rect x="0" y="0" width="1080" height="340" fill="url(#skyH)"/>
+
+  <!-- 4. Sun glow + rays (top-right) -->
+  <circle cx="900" cy="120" r="190" fill="url(#sun)"/>
+  <g opacity="0.25">
+    <line x1="900" y1="120" x2="900" y2="0" stroke="#fff8c8" stroke-width="1.5"/>
+    <line x1="900" y1="120" x2="1080" y2="0" stroke="#fff8c8" stroke-width="1.2"/>
+    <line x1="900" y1="120" x2="1080" y2="120" stroke="#fff8c8" stroke-width="1.2"/>
+  </g>
+
+  <!-- 5. Stadium crowd silhouette (very top) -->
+  <g opacity="0.7">
+    <path d="M 0 0 L 0 60 L 30 50 L 50 65 L 80 45 L 110 70 L 140 50 L 170 68 L 200 45 L 230 65 L 260 48 L 290 70 L 320 50 L 350 65 L 380 45 L 410 68 L 440 50 L 470 66 L 500 45 L 530 68 L 560 50 L 590 65 L 620 46 L 650 68 L 680 50 L 710 66 L 740 45 L 770 68 L 800 50 L 830 65 L 860 48 L 890 68 L 920 50 L 950 66 L 980 45 L 1010 68 L 1040 50 L 1080 65 L 1080 0 Z" fill="#1a3a14"/>
+  </g>
+
+  <!-- 6. Pitch lines (white) -->
   <g stroke="rgba(255,255,255,0.85)" stroke-width="5" fill="none">
     <rect x="40" y="40" width="1000" height="1270" rx="6"/>
     <line x1="40" y1="675" x2="1040" y2="675"/>
     <circle cx="540" cy="675" r="110"/>
-    <circle cx="540" cy="675" r="6" fill="rgba(255,255,255,0.9)"/>
+    <circle cx="540" cy="675" r="5" fill="rgba(255,255,255,0.85)"/>
   </g>
   <g stroke="rgba(255,255,255,0.85)" stroke-width="4" fill="none">
     <rect x="240" y="40" width="600" height="180"/>
     <rect x="380" y="40" width="320" height="80"/>
-    <circle cx="540" cy="290" r="5" fill="rgba(255,255,255,0.9)"/>
+    <circle cx="540" cy="290" r="5" fill="rgba(255,255,255,0.85)"/>
     <rect x="240" y="1130" width="600" height="180"/>
     <rect x="380" y="1230" width="320" height="80"/>
-    <circle cx="540" cy="1060" r="5" fill="rgba(255,255,255,0.9)"/>
+    <circle cx="540" cy="1060" r="5" fill="rgba(255,255,255,0.85)"/>
   </g>
   <g stroke="rgba(255,255,255,0.85)" stroke-width="4" fill="none">
     <path d="M 380 220 A 80 80 0 0 1 700 220"/>
     <path d="M 380 1130 A 80 80 0 0 0 700 1130"/>
   </g>
-  <g stroke="rgba(255,255,255,0.85)" stroke-width="4" fill="none">
-    <circle cx="990" cy="100" r="20"/>
-    <circle cx="90" cy="1250" r="20"/>
-  </g>
 
-  <!-- Corner flags (top-right) -->
-  <g transform="translate(960 80)" opacity="0.85">
+  <!-- 7. Corner flags -->
+  <g transform="translate(960 80)" opacity="0.95">
     <line x1="0" y1="0" x2="0" y2="120" stroke="#f5ebd7" stroke-width="3"/>
-    <path d="M 0 0 L 50 8 L 45 25 L 0 18 Z" fill="url(#flag)" stroke="#d4a020" stroke-width="1.5"/>
+    <path d="M 0 0 L 50 8 L 45 25 L 0 18 Z" fill="url(#flag)" stroke="#3a0808" stroke-width="1.5"/>
   </g>
-  <!-- Corner flag (bottom-left) -->
-  <g transform="translate(120 1230)" opacity="0.85">
+  <g transform="translate(120 1250)" opacity="0.95">
     <line x1="0" y1="0" x2="0" y2="120" stroke="#f5ebd7" stroke-width="3"/>
-    <path d="M 0 0 L 50 8 L 45 25 L 0 18 Z" fill="url(#flag)" stroke="#d4a020" stroke-width="1.5"/>
+    <path d="M 0 0 L 50 8 L 45 25 L 0 18 Z" fill="url(#flag)" stroke="#3a0808" stroke-width="1.5"/>
   </g>
 
-  <!-- Center focus vignette (mild) -->
-  <rect width="1080" height="1350" fill="url(#centerH)"/>
+  <!-- 8. Top center vignette (subtle, for atmosphere) -->
+  <radialGradient id="vignH" cx="50%" cy="50%" r="60%">
+    <stop offset="60%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.15"/>
+  </radialGradient>
+  <rect width="1080" height="1350" fill="url(#vignH)"/>
 
-  <!-- Player shadow (center) -->
-  <ellipse cx="540" cy="1150" rx="80" ry="14" fill="url(#ballShadow)"/>
-
-  <!-- Ball top-right (bright, with shadow) -->
-  <g transform="translate(900 280)" opacity="0.55">
-    <ellipse cx="0" cy="120" rx="60" ry="8" fill="url(#ballShadow)"/>
-    <circle r="80" fill="url(#ballH)" stroke="rgba(0,0,0,0.3)" stroke-width="1"/>
-    <polygon points="0,-40 38,-12 24,33 -24,33 -38,-12" fill="rgba(0,0,0,0.55)" stroke="rgba(0,0,0,0.7)" stroke-width="1.5"/>
-    <line x1="38" y1="-12" x2="55" y2="-16" stroke="rgba(0,0,0,0.4)" stroke-width="1.5"/>
-    <line x1="-38" y1="-12" x2="-55" y2="-16" stroke="rgba(0,0,0,0.4)" stroke-width="1.5"/>
-    <line x1="24" y1="33" x2="38" y2="58" stroke="rgba(0,0,0,0.4)" stroke-width="1.5"/>
-    <line x1="-24" y1="33" x2="-38" y2="58" stroke="rgba(0,0,0,0.4)" stroke-width="1.5"/>
+  <!-- 9. Ball top-right (white, with shadow) -->
+  <g transform="translate(900 280)" opacity="0.85">
+    <ellipse cx="0" cy="105" rx="60" ry="9" fill="url(#ballShadow)"/>
+    <circle r="80" fill="url(#ballH)"/>
+    <polygon points="0,-40 38,-12 24,33 -24,33 -38,-12" fill="rgba(0,0,0,0.6)" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+    <line x1="38" y1="-12" x2="55" y2="-16" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+    <line x1="-38" y1="-12" x2="-55" y2="-16" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+    <line x1="24" y1="33" x2="38" y2="58" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+    <line x1="-24" y1="33" x2="-38" y2="58" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
   </g>
 
-  <!-- Ball bottom-left (smaller, dimmer) -->
-  <g transform="translate(180 1180)" opacity="0.4">
+  <!-- 10. Ball bottom-left (smaller) -->
+  <g transform="translate(180 1100)" opacity="0.7">
     <ellipse cx="0" cy="60" rx="40" ry="6" fill="url(#ballShadow)"/>
-    <circle r="55" fill="url(#ballH)" stroke="rgba(0,0,0,0.3)" stroke-width="1"/>
-    <polygon points="0,-27 26,-9 16,23 -16,23 -26,-9" fill="rgba(0,0,0,0.55)"/>
+    <circle r="50" fill="url(#ballH)"/>
+    <polygon points="0,-25 24,-8 15,20 -15,20 -24,-8" fill="rgba(0,0,0,0.55)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
   </g>
 </svg>
