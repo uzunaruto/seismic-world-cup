@@ -1,77 +1,124 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" preserveAspectRatio="xMidYMid slice">
   <defs>
-    <radialGradient id="focus" cx="50%" cy="50%" r="55%">
-      <stop offset="0%" stop-color="#000" stop-opacity="0.45"/>
-      <stop offset="60%" stop-color="#000" stop-opacity="0.15"/>
+    <linearGradient id="skyH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7ec0ff" stop-opacity="0.35"/>
+      <stop offset="35%" stop-color="#7ec0ff" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#7ec0ff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff8c8" stop-opacity="0.7"/>
+      <stop offset="50%" stop-color="#fff8c8" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#fff8c8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="centerH" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.20"/>
+      <stop offset="60%" stop-color="#000" stop-opacity="0.05"/>
       <stop offset="100%" stop-color="#000" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="ballH" cx="50%" cy="35%" r="65%">
       <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
-      <stop offset="60%" stop-color="#ffffff" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.2"/>
+      <stop offset="60%" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.15"/>
     </radialGradient>
+    <radialGradient id="ballShadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="flag" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f5ebd7"/>
+      <stop offset="100%" stop-color="#d4a020"/>
+    </linearGradient>
   </defs>
 
-  <!-- Mowed stripes (alternating light/dark green) -->
+  <!-- Sky band at top -->
+  <rect x="0" y="0" width="1080" height="280" fill="url(#skyH)"/>
+  <circle cx="900" cy="120" r="160" fill="url(#sun)"/>
+
+  <!-- Bright mowed stripes (lighter green) -->
   <g>
-    <rect x="0" y="0" width="1080" height="135" fill="#4a8c3a"/>
-    <rect x="0" y="135" width="1080" height="135" fill="#3d7a2c"/>
-    <rect x="0" y="270" width="1080" height="135" fill="#4a8c3a"/>
-    <rect x="0" y="405" width="1080" height="135" fill="#3d7a2c"/>
-    <rect x="0" y="540" width="1080" height="135" fill="#4a8c3a"/>
-    <rect x="0" y="675" width="1080" height="135" fill="#3d7a2c"/>
-    <rect x="0" y="810" width="1080" height="135" fill="#4a8c3a"/>
-    <rect x="0" y="945" width="1080" height="135" fill="#3d7a2c"/>
-    <rect x="0" y="1080" width="1080" height="135" fill="#4a8c3a"/>
-    <rect x="0" y="1215" width="1080" height="135" fill="#3d7a2c"/>
+    <rect x="0" y="0" width="1080" height="135" fill="#5ca046"/>
+    <rect x="0" y="135" width="1080" height="135" fill="#4a8c3a"/>
+    <rect x="0" y="270" width="1080" height="135" fill="#5ca046"/>
+    <rect x="0" y="405" width="1080" height="135" fill="#4a8c3a"/>
+    <rect x="0" y="540" width="1080" height="135" fill="#5ca046"/>
+    <rect x="0" y="675" width="1080" height="135" fill="#4a8c3a"/>
+    <rect x="0" y="810" width="1080" height="135" fill="#5ca046"/>
+    <rect x="0" y="945" width="1080" height="135" fill="#4a8c3a"/>
+    <rect x="0" y="1080" width="1080" height="135" fill="#5ca046"/>
+    <rect x="0" y="1215" width="1080" height="135" fill="#4a8c3a"/>
   </g>
 
-  <!-- Grass texture overlay (subtle blades) -->
-  <g fill="#1e4a18" opacity="0.18">
-    <path d="M40 50 q1.5 -7 3 0 z"/><path d="M120 100 q1 -5 2 0 z"/><path d="M200 30 q1.5 -6 3 0 z"/><path d="M280 120 q1 -4 2 0 z"/><path d="M360 60 q1.5 -7 3 0 z"/><path d="M440 110 q1 -5 2 0 z"/><path d="M520 40 q1.5 -6 3 0 z"/><path d="M600 100 q1 -4 2 0 z"/><path d="M680 70 q1.5 -7 3 0 z"/><path d="M760 30 q1 -5 2 0 z"/><path d="M840 110 q1.5 -6 3 0 z"/><path d="M920 50 q1 -4 2 0 z"/><path d="M1000 120 q1.5 -7 3 0 z"/>
-    <path d="M30 200 q1 -4 2 0 z"/><path d="M110 280 q1.5 -6 3 0 z"/><path d="M190 230 q1 -5 2 0 z"/><path d="M270 300 q1.5 -7 3 0 z"/><path d="M350 220 q1 -4 2 0 z"/><path d="M430 290 q1.5 -6 3 0 z"/><path d="M510 240 q1 -5 2 0 z"/><path d="M590 310 q1.5 -7 3 0 z"/><path d="M670 230 q1 -4 2 0 z"/><path d="M750 290 q1.5 -6 3 0 z"/><path d="M830 220 q1 -5 2 0 z"/><path d="M910 300 q1.5 -7 3 0 z"/><path d="M990 240 q1 -4 2 0 z"/>
-    <path d="M20 400 q1.5 -7 3 0 z"/><path d="M100 460 q1 -4 2 0 z"/><path d="M180 420 q1.5 -6 3 0 z"/><path d="M260 480 q1 -5 2 0 z"/><path d="M340 410 q1.5 -7 3 0 z"/><path d="M420 470 q1 -4 2 0 z"/><path d="M500 430 q1.5 -6 3 0 z"/><path d="M580 490 q1 -5 2 0 z"/><path d="M660 420 q1.5 -7 3 0 z"/><path d="M740 470 q1 -4 2 0 z"/><path d="M820 430 q1.5 -6 3 0 z"/><path d="M900 490 q1 -5 2 0 z"/><path d="M980 420 q1.5 -7 3 0 z"/>
+  <!-- Dense grass blade texture (varied greens) -->
+  <g opacity="0.7">
+    <g fill="#0a3a0a" opacity="0.5">
+      <path d="M30 60 q1.5 -7 3 0 z"/><path d="M90 130 q1 -4 2 0 z"/><path d="M150 80 q1.5 -6 3 0 z"/><path d="M210 200 q1 -5 2 0 z"/><path d="M270 100 q1.5 -7 3 0 z"/><path d="M330 240 q1 -4 2 0 z"/><path d="M390 90 q1.5 -6 3 0 z"/><path d="M450 180 q1 -5 2 0 z"/><path d="M510 60 q1.5 -7 3 0 z"/><path d="M570 220 q1 -4 2 0 z"/><path d="M630 110 q1.5 -6 3 0 z"/><path d="M690 240 q1 -5 2 0 z"/><path d="M750 80 q1.5 -7 3 0 z"/><path d="M810 200 q1 -4 2 0 z"/><path d="M870 130 q1.5 -6 3 0 z"/><path d="M930 250 q1 -5 2 0 z"/><path d="M990 90 q1.5 -7 3 0 z"/><path d="M1050 180 q1 -4 2 0 z"/>
+      <path d="M20 320 q1 -5 2 0 z"/><path d="M80 400 q1.5 -6 3 0 z"/><path d="M140 350 q1 -4 2 0 z"/><path d="M200 450 q1.5 -7 3 0 z"/><path d="M260 330 q1 -5 2 0 z"/><path d="M320 410 q1.5 -6 3 0 z"/><path d="M380 370 q1 -4 2 0 z"/><path d="M440 440 q1.5 -7 3 0 z"/><path d="M500 340 q1 -5 2 0 z"/><path d="M560 420 q1.5 -6 3 0 z"/><path d="M620 360 q1 -4 2 0 z"/><path d="M680 450 q1.5 -7 3 0 z"/><path d="M740 350 q1 -5 2 0 z"/><path d="M800 430 q1.5 -6 3 0 z"/><path d="M860 370 q1 -4 2 0 z"/><path d="M920 440 q1.5 -7 3 0 z"/><path d="M980 340 q1 -5 2 0 z"/><path d="M1040 420 q1.5 -6 3 0 z"/>
+      <path d="M10 580 q1.5 -7 3 0 z"/><path d="M70 660 q1 -4 2 0 z"/><path d="M130 620 q1.5 -6 3 0 z"/><path d="M190 700 q1 -5 2 0 z"/><path d="M250 590 q1.5 -7 3 0 z"/><path d="M310 680 q1 -4 2 0 z"/><path d="M370 630 q1.5 -6 3 0 z"/><path d="M430 710 q1 -5 2 0 z"/><path d="M490 580 q1.5 -7 3 0 z"/><path d="M550 670 q1 -4 2 0 z"/><path d="M610 620 q1.5 -6 3 0 z"/><path d="M670 700 q1 -5 2 0 z"/><path d="M730 590 q1.5 -7 3 0 z"/><path d="M790 680 q1 -4 2 0 z"/><path d="M850 630 q1.5 -6 3 0 z"/><path d="M910 710 q1 -5 2 0 z"/><path d="M970 600 q1.5 -7 3 0 z"/><path d="M1030 690 q1 -4 2 0 z"/>
+      <path d="M40 840 q1.5 -6 3 0 z"/><path d="M100 920 q1 -5 2 0 z"/><path d="M160 870 q1.5 -7 3 0 z"/><path d="M220 950 q1 -4 2 0 z"/><path d="M280 860 q1.5 -6 3 0 z"/><path d="M340 940 q1 -5 2 0 z"/><path d="M400 880 q1.5 -7 3 0 z"/><path d="M460 960 q1 -4 2 0 z"/><path d="M520 870 q1.5 -6 3 0 z"/><path d="M580 950 q1 -5 2 0 z"/><path d="M640 890 q1.5 -7 3 0 z"/><path d="M700 970 q1 -4 2 0 z"/><path d="M760 860 q1.5 -6 3 0 z"/><path d="M820 940 q1 -5 2 0 z"/><path d="M880 880 q1.5 -7 3 0 z"/><path d="M940 960 q1 -4 2 0 z"/><path d="M1000 870 q1.5 -6 3 0 z"/><path d="M1060 950 q1 -5 2 0 z"/>
+      <path d="M20 1100 q1.5 -7 3 0 z"/><path d="M80 1180 q1 -4 2 0 z"/><path d="M140 1130 q1.5 -6 3 0 z"/><path d="M200 1210 q1 -5 2 0 z"/><path d="M260 1110 q1.5 -7 3 0 z"/><path d="M320 1190 q1 -4 2 0 z"/><path d="M380 1140 q1.5 -6 3 0 z"/><path d="M440 1220 q1 -5 2 0 z"/><path d="M500 1110 q1.5 -7 3 0 z"/><path d="M560 1190 q1 -4 2 0 z"/><path d="M620 1140 q1.5 -6 3 0 z"/><path d="M680 1220 q1 -5 2 0 z"/><path d="M740 1110 q1.5 -7 3 0 z"/><path d="M800 1190 q1 -4 2 0 z"/><path d="M860 1140 q1.5 -6 3 0 z"/><path d="M920 1220 q1 -5 2 0 z"/><path d="M980 1110 q1.5 -7 3 0 z"/><path d="M1040 1190 q1 -4 2 0 z"/>
+    </g>
+    <g fill="#7ac85c" opacity="0.35">
+      <path d="M50 80 q1.5 -6 3 0 z"/><path d="M110 160 q1 -5 2 0 z"/><path d="M170 110 q1.5 -7 3 0 z"/><path d="M230 220 q1 -4 2 0 z"/><path d="M290 100 q1.5 -6 3 0 z"/><path d="M350 240 q1 -5 2 0 z"/><path d="M410 80 q1.5 -7 3 0 z"/><path d="M470 200 q1 -4 2 0 z"/><path d="M530 60 q1.5 -6 3 0 z"/><path d="M590 220 q1 -5 2 0 z"/><path d="M650 110 q1.5 -7 3 0 z"/><path d="M710 240 q1 -4 2 0 z"/><path d="M770 100 q1.5 -6 3 0 z"/><path d="M830 220 q1 -5 2 0 z"/><path d="M890 80 q1.5 -7 3 0 z"/><path d="M950 200 q1 -4 2 0 z"/><path d="M1010 110 q1.5 -6 3 0 z"/>
+      <path d="M30 350 q1.5 -7 3 0 z"/><path d="M90 430 q1 -4 2 0 z"/><path d="M150 380 q1.5 -6 3 0 z"/><path d="M210 460 q1 -5 2 0 z"/><path d="M270 350 q1.5 -7 3 0 z"/><path d="M330 430 q1 -4 2 0 z"/><path d="M390 390 q1.5 -6 3 0 z"/><path d="M450 460 q1 -5 2 0 z"/><path d="M510 350 q1.5 -7 3 0 z"/><path d="M570 430 q1 -4 2 0 z"/><path d="M630 390 q1.5 -6 3 0 z"/><path d="M690 460 q1 -5 2 0 z"/><path d="M750 360 q1.5 -7 3 0 z"/><path d="M810 430 q1 -4 2 0 z"/><path d="M870 390 q1.5 -6 3 0 z"/><path d="M930 460 q1 -5 2 0 z"/><path d="M990 370 q1.5 -7 3 0 z"/><path d="M1050 440 q1 -4 2 0 z"/>
+    </g>
   </g>
 
-  <!-- Pitch lines (white, faded) -->
-  <g stroke="rgba(255,255,255,0.55)" stroke-width="6" fill="none">
-    <!-- Outer boundary -->
+  <!-- White pitch lines (crisp, day match) -->
+  <g stroke="rgba(255,255,255,0.85)" stroke-width="5" fill="none">
     <rect x="40" y="40" width="1000" height="1270" rx="6"/>
-    <!-- Center line -->
     <line x1="40" y1="675" x2="1040" y2="675"/>
-    <!-- Center circle -->
     <circle cx="540" cy="675" r="110"/>
-    <!-- Center spot -->
-    <circle cx="540" cy="675" r="6" fill="rgba(255,255,255,0.55)"/>
+    <circle cx="540" cy="675" r="6" fill="rgba(255,255,255,0.9)"/>
   </g>
-
-  <!-- Top penalty area (trapezoid-ish rect) -->
-  <g stroke="rgba(255,255,255,0.55)" stroke-width="5" fill="none">
+  <g stroke="rgba(255,255,255,0.85)" stroke-width="4" fill="none">
     <rect x="240" y="40" width="600" height="180"/>
     <rect x="380" y="40" width="320" height="80"/>
-    <circle cx="540" cy="290" r="6" fill="rgba(255,255,255,0.55)"/>
-    <!-- Bottom penalty -->
+    <circle cx="540" cy="290" r="5" fill="rgba(255,255,255,0.9)"/>
     <rect x="240" y="1130" width="600" height="180"/>
     <rect x="380" y="1230" width="320" height="80"/>
-    <circle cx="540" cy="1060" r="6" fill="rgba(255,255,255,0.55)"/>
+    <circle cx="540" cy="1060" r="5" fill="rgba(255,255,255,0.9)"/>
+  </g>
+  <g stroke="rgba(255,255,255,0.85)" stroke-width="4" fill="none">
+    <path d="M 380 220 A 80 80 0 0 1 700 220"/>
+    <path d="M 380 1130 A 80 80 0 0 0 700 1130"/>
+  </g>
+  <g stroke="rgba(255,255,255,0.85)" stroke-width="4" fill="none">
+    <circle cx="990" cy="100" r="20"/>
+    <circle cx="90" cy="1250" r="20"/>
   </g>
 
-  <!-- Center focus vignette (so player portrait pops) -->
-  <rect width="1080" height="1350" fill="url(#focus)"/>
-
-  <!-- Ball top-right (faded) -->
-  <g transform="translate(880 220)" opacity="0.45">
-    <circle r="90" fill="url(#ballH)"/>
-    <polygon points="0,-45 43,-14 26,37 -26,37 -43,-14" fill="rgba(0,0,0,0.45)" stroke="rgba(0,0,0,0.6)" stroke-width="2"/>
-    <line x1="43" y1="-14" x2="62" y2="-18" stroke="rgba(0,0,0,0.3)" stroke-width="1.5"/>
-    <line x1="-43" y1="-14" x2="-62" y2="-18" stroke="rgba(0,0,0,0.3)" stroke-width="1.5"/>
-    <line x1="26" y1="37" x2="42" y2="65" stroke="rgba(0,0,0,0.3)" stroke-width="1.5"/>
-    <line x1="-26" y1="37" x2="-42" y2="65" stroke="rgba(0,0,0,0.3)" stroke-width="1.5"/>
+  <!-- Corner flags (top-right) -->
+  <g transform="translate(960 80)" opacity="0.85">
+    <line x1="0" y1="0" x2="0" y2="120" stroke="#f5ebd7" stroke-width="3"/>
+    <path d="M 0 0 L 50 8 L 45 25 L 0 18 Z" fill="url(#flag)" stroke="#d4a020" stroke-width="1.5"/>
+  </g>
+  <!-- Corner flag (bottom-left) -->
+  <g transform="translate(120 1230)" opacity="0.85">
+    <line x1="0" y1="0" x2="0" y2="120" stroke="#f5ebd7" stroke-width="3"/>
+    <path d="M 0 0 L 50 8 L 45 25 L 0 18 Z" fill="url(#flag)" stroke="#d4a020" stroke-width="1.5"/>
   </g>
 
-  <!-- Ball bottom-left (smaller) -->
-  <g transform="translate(180 1100)" opacity="0.35">
-    <circle r="60" fill="url(#ballH)"/>
-    <polygon points="0,-30 28,-9 17,24 -17,24 -28,-9" fill="rgba(0,0,0,0.4)"/>
+  <!-- Center focus vignette (mild) -->
+  <rect width="1080" height="1350" fill="url(#centerH)"/>
+
+  <!-- Player shadow (center) -->
+  <ellipse cx="540" cy="1150" rx="80" ry="14" fill="url(#ballShadow)"/>
+
+  <!-- Ball top-right (bright, with shadow) -->
+  <g transform="translate(900 280)" opacity="0.55">
+    <ellipse cx="0" cy="120" rx="60" ry="8" fill="url(#ballShadow)"/>
+    <circle r="80" fill="url(#ballH)" stroke="rgba(0,0,0,0.3)" stroke-width="1"/>
+    <polygon points="0,-40 38,-12 24,33 -24,33 -38,-12" fill="rgba(0,0,0,0.55)" stroke="rgba(0,0,0,0.7)" stroke-width="1.5"/>
+    <line x1="38" y1="-12" x2="55" y2="-16" stroke="rgba(0,0,0,0.4)" stroke-width="1.5"/>
+    <line x1="-38" y1="-12" x2="-55" y2="-16" stroke="rgba(0,0,0,0.4)" stroke-width="1.5"/>
+    <line x1="24" y1="33" x2="38" y2="58" stroke="rgba(0,0,0,0.4)" stroke-width="1.5"/>
+    <line x1="-24" y1="33" x2="-38" y2="58" stroke="rgba(0,0,0,0.4)" stroke-width="1.5"/>
+  </g>
+
+  <!-- Ball bottom-left (smaller, dimmer) -->
+  <g transform="translate(180 1180)" opacity="0.4">
+    <ellipse cx="0" cy="60" rx="40" ry="6" fill="url(#ballShadow)"/>
+    <circle r="55" fill="url(#ballH)" stroke="rgba(0,0,0,0.3)" stroke-width="1"/>
+    <polygon points="0,-27 26,-9 16,23 -16,23 -26,-9" fill="rgba(0,0,0,0.55)"/>
   </g>
 </svg>
