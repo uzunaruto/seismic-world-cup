@@ -77,12 +77,12 @@ export default function Home() {
       <h1 className="hero__title">Your card. Your team. The album is waiting.</h1>
       <p className="hero__sub">
         Connect Discord, pick a position, choose your kit, write your motto.
-        Every card is reviewed by a curator before it joins the public album.
+        Your card joins the public squad album.
       </p>
 
       {authError && (
         <div className="status-banner status-banner--rejected" style={{ marginBottom: 16 }}>
-          ⚠️ {authError}. Make sure you joined the Seismic Discord.
+          ⚠️ {authError}
         </div>
       )}
 
@@ -153,14 +153,14 @@ export default function Home() {
           <div className="hero__feature-icon">🎨</div>
           <div>
             <div className="hero__feature-title">Three kits</div>
-            <div className="hero__feature-sub">Home copper, away obsidian, or limited foil ✨</div>
+            <div className="hero__feature-sub">Home copper, away obsidian, or limited foil</div>
           </div>
         </div>
         <div className="hero__feature">
-          <div className="hero__feature-icon">🛡️</div>
+          <div className="hero__feature-icon">🏟️</div>
           <div>
-            <div className="hero__feature-title">Curator review</div>
-            <div className="hero__feature-sub">Mods react ✅/❌ in Discord before publishing</div>
+            <div className="hero__feature-title">Album is permanent</div>
+            <div className="hero__feature-sub">Your card joins the public squad page forever</div>
           </div>
         </div>
       </div>

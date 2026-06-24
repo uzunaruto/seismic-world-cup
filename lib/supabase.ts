@@ -1,5 +1,15 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
+// Returns true if Supabase env vars are present.
+// Used by API routes to fall back to a "no-backend" mode during dev/MVP
+// without crashing when the operator hasn't set up Supabase yet.
+export function isSupabaseConfigured(): boolean {
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
+}
+
 // Server-side Supabase client (service role, full DB access).
 // NEVER import this from a Client Component — exposes service role key.
 let _service: SupabaseClient | null = null;
