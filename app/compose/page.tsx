@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { toPng } from 'html-to-image';
 import { PaniniCard, PaniniCardProps } from '@/components/PaniniCard';
-import { generateStats, Position, Kit, POSITION_LABELS, KIT_LABELS } from '@/lib/stats';
+import { generateStats, Position, Kit, POSITION_LABELS, POSITION_SHORT, KIT_LABELS, MAG_COLORS } from '@/lib/stats';
 import { useSession } from '@/lib/use-session';
 
 type Status = 'idle' | 'submitting' | 'pending' | 'approved' | 'rejected';
@@ -14,6 +14,20 @@ const POSITIONS: Position[] = ['forward', 'midfielder', 'defender', 'goalkeeper'
 const KITS: Kit[] = ['home', 'away', 'foil'];
 
 const MAX_MOTTO = 80;
+
+// Pitch layout: 4-3-3 with captain slot center-back
+const PITCH_LAYOUT: Array<{ row: 'for' | 'mid' | 'def' | 'gk'; slots: Position[] }> = [
+  { row: 'for', slots: ['forward'] },
+  { row: 'mid', slots: ['midfielder'] },
+  { row: 'def', slots: ['defender', 'captain'] },
+  { row: 'gk', slots: ['goalkeeper'] },
+];
+
+const KIT_META: Record<Kit, { name: string; sub: string; visualClass: string }> = {
+  home: { name: 'Home', sub: 'Copper on cream', visualClass: 'kit-swatch__visual--home' },
+  away: { name: 'Away', sub: 'Obsidian on copper', visualClass: 'kit-swatch__visual--away' },
+  foil: { name: 'Foil', sub: 'Limited shimmer', visualClass: 'kit-swatch__visual--foil' },
+};
 
 export default function Compose() {
   return <ComposeInner />;
@@ -34,12 +48,10 @@ function ComposeInner() {
 
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // If not logged in and not loading, send back to home
   useEffect(() => {
     if (!loading && !user) router.push('/');
   }, [loading, user, router]);
 
-  // Poll for status if pending
   useEffect(() => {
     if (status !== 'pending' || !submissionId) return;
     const interval = setInterval(async () => {
@@ -75,17 +87,15 @@ function ComposeInner() {
     setRendering(true);
 
     try {
-      // 1. Render the card to PNG
       const png = await toPng(cardRef.current, {
         cacheBust: true,
         pixelRatio: 2,
         width: 1080,
         height: 1620,
         backgroundColor: kit === 'away' ? '#0a0806' : kit === 'foil' ? '#A87504' : '#A87504',
-        skipFonts: true,    // fonts already in DOM
+        skipFonts: true,
       });
 
-      // 2. Upload PNG to server
       const formData = new FormData();
       const blob = await (await fetch(png)).blob();
       formData.append('card', blob, 'card.png');
@@ -93,10 +103,7 @@ function ComposeInner() {
       formData.append('kit', kit);
       formData.append('motto', motto.trim());
 
-      const res = await fetch('/api/submit', {
-        method: 'POST',
-        body: formData,
-      });
+      const res = await fetch('/api/submit', { method: 'POST', body: formData });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
         throw new Error(data.message || data.error || 'Submission failed');
@@ -116,26 +123,21 @@ function ComposeInner() {
   if (loading) {
     return (
       <main className="composer">
-        <div className="composer__stage">
-          <div className="loading"><div className="spinner" /> Loading session…</div>
+        <div className="composer__stage" style={{ gridColumn: '1 / -1', minHeight: 320 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'var(--parchment-soft)' }}>
+            <div className="spinner" /> Loading your session
+          </div>
         </div>
       </main>
     );
   }
 
-  if (!user) {
-    return (
-      <main className="composer">
-        <div className="composer__stage">
-          <div className="loading">Redirecting…</div>
-        </div>
-      </main>
-    );
-  }
+  if (!user) return null;
 
   const stats = generateStats(user.discord_id, position);
   const jerseyNumber = user.magnitude ?? 7;
   const displayName = user.global_name || user.username;
+  const userMagColor = user.magnitude ? MAG_COLORS[user.magnitude] : '#A87504';
 
   const cardProps: PaniniCardProps = {
     username: user.username,
@@ -149,75 +151,136 @@ function ComposeInner() {
     jerseyNumber,
   };
 
+  const locked = status === 'submitting' || status === 'pending';
+
   return (
     <main className="composer">
-      <section className="composer__stage">
+      {/* Top bar with back nav */}
+      <div className="composer__top">
+        <Link href="/" className="btn-ghost">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
+            <path d="M19 12H5M12 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          Back
+        </Link>
+        <div className="user-card" style={{ marginTop: 0, maxWidth: 'none' }}>
+          <img src={user.pfp_url} alt={user.username} />
+          <div>
+            <div className="user-card__name">{displayName}</div>
+            <div className="user-card__handle">@{user.username}</div>
+          </div>
+          {user.magnitude && (
+            <span className="magnitude-tag" style={{ color: userMagColor, borderColor: userMagColor }}>
+              M{user.magnitude}
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Stage: live card preview */}
+      <section className="composer__stage" aria-label="Card preview">
         <div className="card-preview-wrapper">
           <PaniniCard ref={cardRef} {...cardProps} />
         </div>
         {rendering && (
           <div className="card-rendering-overlay">
             <div className="spinner" />
-            Rendering your card…
+            Rendering your card
           </div>
         )}
       </section>
 
-      <aside className="composer__panel">
-        <h1 className="composer__title">
-          Build your <em>card</em>
-        </h1>
-
-        <div className="user-card">
-          <img src={user.pfp_url} alt={user.username} />
-          <div>
-            <div className="user-card__name">
-              {displayName}
-              {user.magnitude && (
-                <span style={{ marginLeft: 8, color: 'var(--copper-bright)' }}>M{user.magnitude}</span>
-              )}
-            </div>
-            <div className="user-card__handle">@{user.username}</div>
-          </div>
+      {/* Panel: selectors */}
+      <aside className="composer__panel" aria-label="Card options">
+        <div>
+          <div className="bento__cell-label" style={{ marginBottom: 4 }}>Step 1 / 3</div>
+          <h1 className="composer__title">Pick your <em>position</em></h1>
         </div>
 
         <div className="field">
-          <label className="field__label">Position</label>
-          <div className="scene-picker">
-            {POSITIONS.map((p) => (
-              <button
-                key={p}
-                className={`scene-chip ${position === p ? 'scene-chip--active' : ''}`}
-                onClick={() => setPosition(p)}
-                disabled={status === 'submitting' || status === 'pending'}
-              >
-                {POSITION_LABELS[p]}
-              </button>
+          <label className="field__label">
+            Formation
+            <span className="field__counter">{POSITION_LABELS[position]}</span>
+          </label>
+          <div className="pitch" role="radiogroup" aria-label="Position">
+            <span className="pitch__line" />
+            <span className="pitch__circle" />
+            {PITCH_LAYOUT.map(({ row, slots }) => (
+              <div key={row} className="pitch__col" data-row={row}>
+                {slots.map((p) => (
+                  <button
+                    key={p}
+                    type="button"
+                    role="radio"
+                    aria-checked={position === p}
+                    aria-label={POSITION_LABELS[p]}
+                    className={`pitch__slot ${p === 'captain' ? 'pitch__slot--captain' : ''} ${position === p ? 'pitch__slot--active' : ''}`}
+                    onClick={() => setPosition(p)}
+                    disabled={locked}
+                    title={POSITION_LABELS[p]}
+                  >
+                    {POSITION_SHORT[p]}
+                  </button>
+                ))}
+              </div>
             ))}
           </div>
         </div>
 
         <div className="field">
-          <label className="field__label">Kit</label>
-          <div className="scene-picker">
+          <label className="field__label">
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              Stats
+              <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--copper-bright)' }}>
+                M{user.magnitude ?? 7}
+              </span>
+            </span>
+            <span className="field__counter">live</span>
+          </label>
+          <div className="stat-strip">
+            {(['PAC', 'SHO', 'PAS', 'DRI', 'OVR'] as const).map((k) => (
+              <div key={k} className="stat-cell">
+                <span className="stat-cell__label">{k}</span>
+                <span className="stat-cell__val">{stats[k.toLowerCase() as keyof typeof stats]}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="field">
+          <label className="field__label">
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              Step 2 / 3
+              Kit
+            </span>
+            <span className="field__counter">{KIT_META[kit].name}</span>
+          </label>
+          <div className="kits" role="radiogroup" aria-label="Kit">
             {KITS.map((k) => (
               <button
                 key={k}
-                className={`scene-chip ${kit === k ? 'scene-chip--active' : ''}`}
+                type="button"
+                role="radio"
+                aria-checked={kit === k}
+                className={`kit-swatch ${kit === k ? 'kit-swatch--active' : ''}`}
                 onClick={() => setKit(k)}
-                disabled={status === 'submitting' || status === 'pending'}
+                disabled={locked}
               >
-                {KIT_LABELS[k]}
-                {k === 'foil' && <span style={{ marginLeft: 6, opacity: 0.7 }}>✨</span>}
+                <div className={`kit-swatch__visual ${KIT_META[k].visualClass}`} />
+                <div className="kit-swatch__name">{KIT_META[k].name}</div>
+                <div className="kit-swatch__sub">{KIT_META[k].sub}</div>
               </button>
             ))}
           </div>
         </div>
 
         <div className="field">
-          <label className="field__label" style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>Motto</span>
-            <span style={{ opacity: 0.6 }}>{motto.length}/{MAX_MOTTO}</span>
+          <label className="field__label">
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              Step 3 / 3
+              Motto
+            </span>
+            <span className="field__counter">{motto.length} / {MAX_MOTTO}</span>
           </label>
           <input
             type="text"
@@ -225,22 +288,17 @@ function ComposeInner() {
             onChange={(e) => setMotto(e.target.value.slice(0, MAX_MOTTO))}
             placeholder="We're going all the way"
             maxLength={MAX_MOTTO}
-            disabled={status === 'submitting' || status === 'pending'}
-            style={{
-              background: 'var(--bg-elev)',
-              border: '1px solid var(--line)',
-              borderRadius: 'var(--radius)',
-              padding: '12px 16px',
-              color: 'var(--parchment)',
-              fontSize: 15,
-              fontFamily: 'inherit',
-            }}
+            disabled={locked}
           />
         </div>
 
         {user.is_default_avatar && (
           <div className="status-banner status-banner--rejected">
-            ⚠️ You need a custom Discord avatar before submitting.
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 8v4M12 16h.01" strokeLinecap="round" />
+            </svg>
+            You need a custom Discord avatar before submitting.
           </div>
         )}
 
@@ -249,49 +307,64 @@ function ComposeInner() {
             className="btn-primary"
             onClick={handleSubmit}
             disabled={user.is_default_avatar || !motto.trim()}
+            style={{ alignSelf: 'stretch', justifyContent: 'center' }}
           >
-            Submit to curator review →
+            Submit to curator review
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
+              <path d="M5 12h14M13 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </button>
         )}
         {status === 'submitting' && (
-          <button className="btn-primary" disabled>
+          <button className="btn-primary" disabled style={{ alignSelf: 'stretch', justifyContent: 'center' }}>
             <div className="spinner" />
-            Rendering + uploading…
+            Rendering + uploading
           </button>
         )}
         {status === 'pending' && (
           <div className="status-banner status-banner--pending">
             <div className="spinner" />
-            Waiting for curator review. Usually &lt; 1 hour.
+            Waiting for curator review. Usually under 1 hour.
           </div>
         )}
         {status === 'approved' && (
           <div className="status-banner status-banner--approved">
-            ✅ Approved!{' '}
-            <Link href="/gallery" style={{ marginLeft: 'auto', textDecoration: 'underline' }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
+              <path d="M5 12l5 5L20 7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Approved
+            <Link href="/gallery" style={{ marginLeft: 'auto', textDecoration: 'underline', fontWeight: 600 }}>
               See the album
             </Link>
           </div>
         )}
         {status === 'rejected' && (
           <div className="status-banner status-banner--rejected">
-            ❌ Rejected{error ? `: ${error}` : ''}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+            </svg>
+            Rejected{error ? `: ${error}` : ''}
           </div>
         )}
 
         {error && status === 'idle' && (
-          <div className="status-banner status-banner--rejected">⚠️ {error}</div>
+          <div className="status-banner status-banner--rejected">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 8v4M12 16h.01" strokeLinecap="round" />
+            </svg>
+            {error}
+          </div>
         )}
 
         {cardUrl && (
-          <a href={cardUrl} download={`seismic-card-${user.username}.png`} className="btn-secondary">
-            ⬇ Download your card
+          <a href={cardUrl} download={`seismic-card-${user.username}.png`} className="btn-secondary" style={{ justifyContent: 'center' }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <path d="M12 3v14M5 10l7 7 7-7M5 21h14" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Download your card
           </a>
         )}
-
-        <Link href="/" style={{ fontSize: 13, color: 'var(--parchment-dim)', textAlign: 'center' }}>
-          ← Back to home
-        </Link>
       </aside>
     </main>
   );

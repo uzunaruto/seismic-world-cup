@@ -4,24 +4,24 @@
 // Auth flow:
 //   1. User clicks "Connect Discord" on landing page
 //   2. Client-side redirect to discord.com/oauth2/authorize (implicit flow,
-//      response_type=token — no PKCE needed, no client secret on the wire)
+//      response_type=token - no PKCE needed, no client secret on the wire)
 //   3. Discord redirects back to <REDIRECT_URI>#access_token=XXX
 //   4. Client JS reads token, calls /api/auth/discord/session
 //   5. Server validates token via /users/@me, fetches guild member via
 //      /users/@me/guilds/{guild_id}/member, persists to Supabase, returns
 //      httpOnly session cookie
 //
-// Scope: 'identify guilds.members.read' — both required to get user + roles.
+// Scope: 'identify guilds.members.read' - both required to get user + roles.
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Seismic configuration — pulled from MEMORY (seismic-identity setup)
+// Seismic configuration - pulled from MEMORY (seismic-identity setup)
 // -----------------------------------------------------------------------------
 export const DISCORD_CLIENT_ID = '1509035141526192299';   // "Seismic Card" app
 export const SEISMIC_GUILD_ID = '1343751435711414362';
 export const DISCORD_SCOPES = 'identify guilds.members.read';
 
-// Magnitude role snowflakes (from MEMORY) — highest wins
+// Magnitude role snowflakes (from MEMORY) - highest wins
 export const MAG_ROLE_IDS: Record<string, number> = {
   '1346572989654765691': 3,
   '1346583232220500051': 4,
@@ -95,7 +95,7 @@ export async function fetchDiscordIdentity(accessToken: string): Promise<Discord
     return null;
   }
 
-  // 3. Resolve PFP URL — guild avatar overrides global
+  // 3. Resolve PFP URL - guild avatar overrides global
   const roleIds: string[] = member.roles || [];
   const guildAvatar = member.avatar;
   let pfpUrl: string;
@@ -108,7 +108,7 @@ export async function fetchDiscordIdentity(accessToken: string): Promise<Discord
     pfpUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${ext}?size=1024`;
     isDefault = false;
   } else {
-    // Default avatar — face-swap will fail on these
+    // Default avatar - face-swap will fail on these
     const idx = (BigInt(user.id) >> 22n) % 6n;       // new formula (no discriminator)
     pfpUrl = `https://cdn.discordapp.com/embed/avatars/${idx}.png?size=1024`;
     isDefault = true;
@@ -128,7 +128,7 @@ export async function fetchDiscordIdentity(accessToken: string): Promise<Discord
 }
 
 // -----------------------------------------------------------------------------
-// Magnitude detection — return highest tier from role array
+// Magnitude detection - return highest tier from role array
 // -----------------------------------------------------------------------------
 export function detectMagnitudeFromRoles(roleIds: string[]): number | null {
   let highest = 0;

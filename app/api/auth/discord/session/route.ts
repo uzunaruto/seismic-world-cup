@@ -97,7 +97,7 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ ok: true, user, backend_ready: true });
 }
 
-// GET /api/auth/discord/session — return current session
+// GET /api/auth/discord/session - return current session
 export async function GET(_req: NextRequest) {
   if (!isSupabaseConfigured()) {
     return NextResponse.json({ user: null, backend_ready: false });
@@ -118,7 +118,7 @@ export async function GET(_req: NextRequest) {
   return NextResponse.json({ user: data });
 }
 
-// DELETE /api/auth/discord/session — sign out
+// DELETE /api/auth/discord/session - sign out
 export async function DELETE(_req: NextRequest) {
   const cookieStore = await cookies();
   cookieStore.delete('discord_session');

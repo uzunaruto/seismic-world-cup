@@ -11,7 +11,7 @@ export function isSupabaseConfigured(): boolean {
 }
 
 // Server-side Supabase client (service role, full DB access).
-// NEVER import this from a Client Component — exposes service role key.
+// NEVER import this from a Client Component - exposes service role key.
 let _service: SupabaseClient | null = null;
 
 export function getServiceSupabase(): SupabaseClient {

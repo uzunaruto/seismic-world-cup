@@ -45,7 +45,7 @@ export function useSession(): SessionState {
       .then((r) => r.json())
       .then((d) => {
         if (d.backend_ready === false) {
-          // Backend not configured yet — keep localStorage user if any
+          // Backend not configured yet - keep localStorage user if any
           setBackendReady(false);
           return;
         }
@@ -55,7 +55,7 @@ export function useSession(): SessionState {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(d.user));
           } catch {}
         } else {
-          // Server says logged out — clear cached
+          // Server says logged out - clear cached
           setUser(null);
           try {
             localStorage.removeItem(STORAGE_KEY);
@@ -63,7 +63,7 @@ export function useSession(): SessionState {
         }
       })
       .catch(() => {
-        // Network error — leave localStorage as-is
+        // Network error - leave localStorage as-is
       });
   }, []);
 

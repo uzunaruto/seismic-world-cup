@@ -1,5 +1,5 @@
 // =============================================================================
-// Discord helpers — webhook embed + reaction listener bot
+// Discord helpers - webhook embed + reaction listener bot
 // =============================================================================
 
 export interface CardEmbed {
