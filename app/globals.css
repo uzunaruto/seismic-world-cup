@@ -308,18 +308,26 @@ button:focus-visible, a:focus-visible {
 /* Force the actual PaniniCard div to size to its parent (no fixed 1080x1620 layout footprint) */
 .hero__preview-card .card-preview-wrapper {
   height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   transform: none !important;
   transform-origin: center;
   pointer-events: none;
+  overflow: visible;
+  container-type: size;
+  container-name: hero-card-preview;
 }
 .hero__preview-card .card-preview-wrapper > div {
-  height: 100% !important;
-  width: auto !important;
-  aspect-ratio: 1080 / 1620;
-  max-width: 100%;
+  /* Card stays at native 1080x1620; scale dynamically to fit preview
+     container using container query height (cqh). This way the card
+     always fits the preview area regardless of viewport size. */
+  width: 1080px !important;
+  height: 1620px !important;
+  flex-shrink: 0;
+  transform: scale(calc(100cqh / 1620));
+  transform-origin: center center;
 }
 .hero__preview-pill {
   position: absolute;
