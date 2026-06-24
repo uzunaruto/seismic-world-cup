@@ -161,6 +161,15 @@ img { display: block; max-width: 100%; }
   border: 1px solid var(--line);
   border-radius: var(--radius);
   text-align: left;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+.hero__feature--clickable { cursor: pointer; }
+.hero__feature--clickable:hover {
+  border-color: var(--copper);
+  background: rgba(168, 117, 4, 0.08);
+  transform: translateX(4px);
 }
 .hero__feature-icon {
   font-size: 28px;

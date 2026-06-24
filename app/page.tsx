@@ -142,27 +142,27 @@ export default function Home() {
       )}
 
       <div className="hero__features" style={{ marginTop: 64, maxWidth: 720, width: '100%' }}>
-        <div className="hero__feature">
+        <Link href="/compose" className="hero__feature hero__feature--clickable">
           <div className="hero__feature-icon">⚽</div>
           <div>
-            <div className="hero__feature-title">Pick your position</div>
+            <div className="hero__feature-title">Pick your position →</div>
             <div className="hero__feature-sub">Forward, midfielder, defender, GK, captain, or coach</div>
           </div>
-        </div>
-        <div className="hero__feature">
+        </Link>
+        <Link href="/compose" className="hero__feature hero__feature--clickable">
           <div className="hero__feature-icon">🎨</div>
           <div>
-            <div className="hero__feature-title">Three kits</div>
+            <div className="hero__feature-title">Three kits →</div>
             <div className="hero__feature-sub">Home copper, away obsidian, or limited foil</div>
           </div>
-        </div>
-        <div className="hero__feature">
+        </Link>
+        <Link href="/gallery" className="hero__feature hero__feature--clickable">
           <div className="hero__feature-icon">🏟️</div>
           <div>
-            <div className="hero__feature-title">Album is permanent</div>
-            <div className="hero__feature-sub">Your card joins the public squad page forever</div>
+            <div className="hero__feature-title">Album is permanent →</div>
+            <div className="hero__feature-sub">Browse the public squad page</div>
           </div>
-        </div>
+        </Link>
       </div>
     </main>
   );
