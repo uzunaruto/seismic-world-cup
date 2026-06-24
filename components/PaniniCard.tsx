@@ -230,28 +230,29 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
           </div>
         ))}
 
-        {/* OVR — distinct visual treatment, larger font + accent border */}
+        {/* OVR — same visual treatment as other stats, value colored with magColor */}
         <div
           style={{
-            background: magColor,
-            color: '#0a0806',
+            background: tokens.statBg,
+            color: tokens.statText,
             borderRadius: 12,
             padding: '14px 4px',
             textAlign: 'center',
             fontWeight: 800,
-            border: `2px solid ${kit === 'foil' ? '#1a140d' : tokens.accent}`,
-            boxShadow: `0 4px 14px rgba(0,0,0,${kit === 'foil' ? '0.35' : '0.45'}), inset 0 0 0 2px rgba(0,0,0,0.15)`,
+            border: `2px solid ${magColor}`,
+            boxShadow: `inset 0 0 0 1px ${magColor}`,
           }}
         >
-          <div style={{ fontSize: 14, letterSpacing: '0.12em', textTransform: 'uppercase', opacity: 0.85 }}>
+          <div style={{ fontSize: 14, letterSpacing: '0.12em', textTransform: 'uppercase', opacity: 0.7 }}>
             OVR
           </div>
           <div
             style={{
-              fontSize: 42,
+              fontSize: 38,
               lineHeight: 1,
               marginTop: 4,
               fontFamily: "'Cinzel', serif",
+              color: magColor,
               fontWeight: 900,
             }}
           >
