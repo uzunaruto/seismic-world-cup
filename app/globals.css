@@ -7,9 +7,9 @@
    ========================================================================== */
 
 :root {
-  --bg: #6b5640;
-  --bg-elev: #806a4f;
-  --bg-elev-2: #957c5e;
+  --bg: #8a6f50;
+  --bg-elev: #9a7f60;
+  --bg-elev-2: #a88e70;
   --parchment: #f5ebd7;
   --parchment-dim: #d8c8a8;
   --parchment-soft: rgba(245, 235, 215, 0.6);
@@ -50,9 +50,7 @@ html, body {
 
 body {
   background-image:
-    radial-gradient(ellipse 70% 50% at 15% 0%, rgba(212, 160, 32, 0.18), transparent 60%),
-    radial-gradient(ellipse 60% 60% at 85% 100%, rgba(196, 106, 47, 0.14), transparent 60%),
-    radial-gradient(ellipse 80% 40% at 50% 50%, rgba(245, 235, 215, 0.05), transparent 70%);
+    radial-gradient(ellipse 80% 50% at 50% 50%, rgba(255, 220, 160, 0.10), transparent 70%);
   background-attachment: fixed;
   position: relative;
 }
