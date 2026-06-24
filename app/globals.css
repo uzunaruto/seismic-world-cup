@@ -7,9 +7,9 @@
    ========================================================================== */
 
 :root {
-  --bg: #4a3a25;
-  --bg-elev: #5c4a30;
-  --bg-elev-2: #6e5940;
+  --bg: #6b5640;
+  --bg-elev: #806a4f;
+  --bg-elev-2: #957c5e;
   --parchment: #f5ebd7;
   --parchment-dim: #d8c8a8;
   --parchment-soft: rgba(245, 235, 215, 0.6);
@@ -23,11 +23,11 @@
   --rocky-bright: #e08a4a;
   --rose: #9c1515;
   --emerald: #2aa346;
-  --line: rgba(212, 160, 32, 0.20);
-  --line-soft: rgba(212, 160, 32, 0.10);
-  --line-strong: rgba(212, 160, 32, 0.35);
-  --shadow-1: 0 4px 20px rgba(0, 0, 0, 0.5);
-  --shadow-2: 0 8px 40px rgba(0, 0, 0, 0.7);
+  --line: rgba(26, 20, 13, 0.25);
+  --line-soft: rgba(26, 20, 13, 0.12);
+  --line-strong: rgba(26, 20, 13, 0.40);
+  --shadow-1: 0 4px 20px rgba(26, 20, 13, 0.35);
+  --shadow-2: 0 8px 40px rgba(26, 20, 13, 0.5);
   --shadow-card: 0 24px 60px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--line);
   --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
   --font-serif: 'Cinzel', 'Times New Roman', serif;
