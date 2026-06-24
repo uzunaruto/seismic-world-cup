@@ -198,46 +198,84 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
         </div>
       )}
 
-      {/* Stats grid */}
+      {/* OVR badge — top-right corner, FIFA-style circular focal point */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 90,
+          right: 38,
+          width: 168,
+          height: 168,
+          borderRadius: '50%',
+          background: `radial-gradient(circle at 35% 30%, ${magColor} 0%, ${kit === 'foil' ? '#1a140d' : '#0a0806'} 110%)`,
+          border: `5px solid ${kit === 'foil' ? '#fff5e0' : tokens.accent}`,
+          boxShadow: `0 8px 28px rgba(0,0,0,${kit === 'foil' ? '0.45' : '0.6'}), inset 0 0 0 3px ${kit === 'foil' ? '#1a140d' : tokens.bg.includes('gradient') ? 'rgba(0,0,0,0.25)' : 'rgba(0,0,0,0.18)'}`,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: kit === 'foil' ? '#fff5e0' : tokens.text,
+          fontFamily: "'Cinzel', serif",
+          zIndex: 2,
+        }}
+        aria-label={`Overall rating ${stats.ovr}`}
+      >
+        <div
+          style={{
+            fontSize: 14,
+            fontWeight: 800,
+            letterSpacing: '0.22em',
+            textTransform: 'uppercase',
+            opacity: 0.75,
+            lineHeight: 1,
+            marginBottom: 4,
+          }}
+        >
+          OVR
+        </div>
+        <div
+          style={{
+            fontSize: 76,
+            fontWeight: 900,
+            lineHeight: 0.9,
+            textShadow: kit === 'foil' ? '0 2px 0 rgba(0,0,0,0.35)' : '0 2px 8px rgba(0,0,0,0.4)',
+          }}
+        >
+          {stats.ovr}
+        </div>
+      </div>
+
+      {/* Stats grid — 4 sub-stats (OVR is now the corner badge) */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(5, 1fr)',
+          gridTemplateColumns: 'repeat(4, 1fr)',
           gap: 10,
           width: '100%',
-          maxWidth: 880,
+          maxWidth: 760,
           marginBottom: 20,
         }}
       >
-        {(['pac', 'sho', 'pas', 'dri', 'ovr'] as const).map((key) => {
-          const isOvr = key === 'ovr';
-          return (
-            <div
-              key={key}
-              style={{
-                background: isOvr
-                  ? (kit === 'foil' ? '#1a140d' : magColor)
-                  : tokens.statBg,
-                color: isOvr
-                  ? (kit === 'foil' ? '#fff5e0' : '#0a0806')
-                  : tokens.statText,
-                borderRadius: 12,
-                padding: '14px 6px',
-                textAlign: 'center',
-                fontWeight: 800,
-                border: isOvr ? `2px solid ${kit === 'foil' ? '#fff5e0' : '#0a0806'}` : 'none',
-                boxShadow: isOvr ? '0 4px 14px rgba(0,0,0,0.35)' : 'none',
-              }}
-            >
-              <div style={{ fontSize: 18, letterSpacing: '0.14em', textTransform: 'uppercase', opacity: isOvr ? 1 : 0.7, fontWeight: isOvr ? 800 : 700 }}>
-                {key}
-              </div>
-              <div style={{ fontSize: isOvr ? 52 : 44, lineHeight: 1, marginTop: 4, fontFamily: "'Cinzel', serif" }}>
-                {stats[key]}
-              </div>
+        {(['pac', 'sho', 'pas', 'dri'] as const).map((key) => (
+          <div
+            key={key}
+            style={{
+              background: tokens.statBg,
+              color: tokens.statText,
+              borderRadius: 12,
+              padding: '12px 6px',
+              textAlign: 'center',
+              fontWeight: 800,
+            }}
+          >
+            <div style={{ fontSize: 16, letterSpacing: '0.14em', textTransform: 'uppercase', opacity: 0.7 }}>
+              {key}
             </div>
-          );
-        })}
+            <div style={{ fontSize: 42, lineHeight: 1, marginTop: 4, fontFamily: "'Cinzel', serif" }}>
+              {stats[key]}
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Bottom bar: jersey number + magnitude + year */}
