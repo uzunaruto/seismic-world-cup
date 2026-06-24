@@ -112,14 +112,14 @@ export const PaniniCard = forwardRef<HTMLDivElement, PaniniCardProps>(function P
       {/* Player photo */}
       <div
         style={{
-          width: 480,
-          height: 480,
+          width: 420,
+          height: 420,
           borderRadius: '50%',
           background: tokens.accent,
-          padding: 10,
+          padding: 8,
           boxSizing: 'border-box',
-          marginBottom: 24,
-          boxShadow: `0 10px 32px rgba(0, 0, 0, ${kit === 'foil' ? '0.35' : '0.5'})`,
+          marginBottom: 22,
+          boxShadow: `0 8px 28px rgba(0, 0, 0, ${kit === 'foil' ? '0.35' : '0.5'})`,
         }}
       >
         <img
